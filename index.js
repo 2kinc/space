@@ -21,6 +21,7 @@ function Site(space, canvas) {
             }
         };
         that.data.render();
+        that.startTime = new Date().getTime();
     });
     this.Pixel = function(x, y, color, size) {
         this.x = x * size;
@@ -73,9 +74,7 @@ function Site(space, canvas) {
         var y = Math.floor(e.clientY / 5) - 1;
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
-        that.data[index] = pixel.color;
-        that.data.render();
-        databaseref.child('data').set(JSON.parse(JSON.stringify(that.data)));
+        databaseref.child('data/' + index).set(pixel.color);
     });
 
 }
@@ -88,6 +87,8 @@ var auth = app.auth();
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
 
 databaseref.on('child_changed', function (snapshot) {
+    if (new Date().getTime() <= site.startTime)
+        return;
     var value = snapshot.val();
     site.data = value;
     site.data.render = function() {
