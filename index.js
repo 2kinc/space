@@ -4,8 +4,8 @@ function Site(w, h, canvas) {
     this.height = h;
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
+    this.canvas.width = this.width * 5;
+    this.canvas.height = this.height * 5;
     this.Pixel = function (x, y, color, size) {
         this.x = x * size;
         this.y = y * size;
@@ -26,22 +26,52 @@ function Site(w, h, canvas) {
             y: Number(a[1])
         };
     };
-    this.data = new Map();
+    this.data = [];
     this.data.render = function () {
-        that.data.forEach(function (item, key) {
-            var c = that.getCoordinatesFromDataKey(key);
-            var pixel = new that.Pixel(c.x, c.y, item, 5);
+        that.data.forEach(function (item, index) {
+            var x = Math.floor(index % that.width);
+            var y = Math.floor(index / that.width) + 1;
+            var pixel = new that.Pixel(x, y, item, 5);
             pixel.display();
         });
     }
 
-    this.canvas.addEventListener('click', function (e) {
-        var x = Math.floor(e.clientX / 5);
-        var y = Math.floor(e.clientY / 5);
-        var pixel = new that.Pixel(x, y, 'black', 5);
-        that.data.set(that.getDataKey(x, y), 'black');
-        that.data.render();
+    this.colors = {
+        black: 'rgb(0,0,0)',
+        white: 'rgb(255,255,255)',
+        red: 'rgb(244,67,54)',
+        orange: 'rgb(255,152,0)',
+        yellow: 'rgb(255,235,59)',
+        green: 'rgb(76,175,80)', 
+        blue: 'rgb(33,150,243)',
+        purple: 'rgb(156,39,176)',
+        pink: 'rgb(233,30,99)'
+    };
+
+    this.selectedColor = this.colors.black;
+
+    $('.palette-color').each(function(){
+        this.style.background = that.colors[this.id];
+        $(this).click(function () {
+            that.selectedColor = that.colors[this.id];
+            $('.palette-color').each(function () {
+                $(this).removeClass('palette-color-selected');
+            });
+            $(this).toggleClass('palette-color-selected');
+        });
     });
+
+    this.canvas.addEventListener('click', function (e) {
+        var x = Math.floor(e.clientX / 5) + 1;
+        var y = Math.floor(e.clientY / 5) + 1;
+        var index = Math.floor((y - 1) * that.width) + x;
+        var pixel = new that.Pixel(x, y, that.selectedColor, 5);
+        that.data[index] = pixel.color;
+        that.data.render();
+        window.localStorage.setItem('data', that.data.toString());
+    });
+
+    this.data.render();
 }
 
-var site = new Site(window.innerWidth, window.innerHeight, document.querySelector('#main-canvas'));
+var site = new Site(window.innerWidth / 5, window.innerHeight / 5, document.querySelector('#main-canvas'));

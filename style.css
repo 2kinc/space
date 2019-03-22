@@ -15,6 +15,7 @@ canvas {
     position: absolute;
     bottom: 0;
     left: 0;
+    user-select: none;
 }
 
 .palette-color {
@@ -22,6 +23,14 @@ canvas {
     width: 80px;
     margin: 20px;
     display: inline-block;
+    border-radius: 6px;
+    box-shadow: 8px 14px 38px rgba(0,0,0,.3), 1px 3px 8px rgba(0,0,0,.3);
+    transition: all 0.2s ease;
+}
+
+.palette-color-selected {
+    box-shadow: 8px 14px 38px rgba(0,0,0,.5), 1px 3px 8px rgba(0,0,0,.5);
+    transform: scale(1.2);
 }
 
 .palette-color:nth-child(even) {
@@ -29,38 +38,6 @@ canvas {
     margin-right: 0;
 }
 
-#black {
-    background: rgb(0,0,0);
-}
-
-#white {
-    background: rgb(255,255,255);
-}
-
-#red {
-    background: rgb(244,67,54);
-}
-
-#orange {
-    background: rgb(255,152,0);
-}
-
-#yellow {
-    background: rgb(255,235,59);
-}
-
-#green {
-    background: rgb(76,175,80);
-}
-
-#blue {
-    background: rgb(33,150,243);
-}
-
-#purple {
-    background: rgb(156,39,176);
-}
-
-#pink {
-    background: rgb(233,30,99);
+html {
+    overflow: hidden;
 }
