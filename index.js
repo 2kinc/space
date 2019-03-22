@@ -69,7 +69,7 @@ function Site(space, canvas) {
     });
 
     this.canvas.addEventListener('click', function(e) {
-        if(this.canvas.classList.contains('disss')){return}
+        if(that.canvas.classList.contains('disss')){return}
         var x = Math.floor(e.clientX / 5) - 1;
         var y = Math.floor(e.clientY / 5) - 1;
         var index = Math.floor(y * that.width) + x;
@@ -77,8 +77,8 @@ function Site(space, canvas) {
         that.data[index] = pixel.color;
         that.data.render();
         databaseref.child('data').set(JSON.parse(JSON.stringify(that.data)));
-        this.canvas.classList.add('disss');
-        setTimeout(()=>{this.canvas.classList.remove('disss')},30000)
+        that.canvas.classList.add('disss');
+        setTimeout(()=>{that.canvas.classList.remove('disss')},30000)
     });
 
 }
