@@ -1,11 +1,27 @@
-function Site(w, h, canvas) {
+function Site(space, canvas) {
     var that = this;
-    this.width = w;
-    this.height = h;
+    var firebasedata;
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
-    this.canvas.width = this.width * 5;
-    this.canvas.height = this.height * 5;
+    space.once('value').then(function (snapshot) {
+        firebasedata = snapshot.val();
+        that.width = firebasedata.width;
+        that.height = firebasedata.height;
+        that.canvas.width = that.width * 5;
+        that.canvas.height = that.height * 5;
+        that.data = firebasedata.data;
+        that.data.render = function() {
+            for (var item in that.data) {
+                if (item == null)
+                    return;
+                var x = Math.floor(item % that.width) + 1;
+                var y = Math.floor(item / that.width) + 1;
+                var pixel = new that.Pixel(x, y, that.data[item], 5);
+                pixel.display();
+            }
+        };
+        that.data.render();
+    });
     this.Pixel = function(x, y, color, size) {
         this.x = x * size;
         this.y = y * size;
@@ -26,17 +42,6 @@ function Site(w, h, canvas) {
             y: Number(a[1])
         };
     };
-    this.data = JSON.parse(window.localStorage.getItem('data')) || [];
-    this.data.render = function() {
-        that.data.forEach(function(item, index) {
-            if (item == null)
-                return;
-            var x = Math.floor(index % that.width) + 1;
-            var y = Math.floor(index / that.width) + 1;
-            var pixel = new that.Pixel(x, y, item, 5);
-            pixel.display();
-        });
-    }
 
     this.colors = {
         black: 'rgb(0,0,0)',
@@ -70,14 +75,30 @@ function Site(w, h, canvas) {
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
         that.data[index] = pixel.color;
         that.data.render();
-        window.localStorage.setItem('data', JSON.stringify(that.data));
+        databaseref.child('data').set(JSON.parse(JSON.stringify(that.data)));
     });
 
-    this.data.render();
 }
-
-var site = new Site(window.innerWidth / 5, window.innerHeight / 5, document.querySelector('#main-canvas'));
 
 var app = firebase;
 var database = firebase.database();
 var databaseref = database.ref('space').child('main');
+var auth = app.auth();
+
+var site = new Site(databaseref, document.querySelector('#main-canvas'));
+
+databaseref.on('child_changed', function (snapshot) {
+    var value = snapshot.val();
+    site.data = value;
+    site.data.render = function() {
+        for (var item in site.data) {
+            if (item == null)
+                return;
+            var x = Math.floor(item % site.width) + 1;
+            var y = Math.floor(item / site.width) + 1;
+            var pixel = new site.Pixel(x, y, site.data[item], 5);
+            pixel.display();
+        }
+    };
+    site.data.render();
+});
