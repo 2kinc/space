@@ -69,9 +69,9 @@ function Site(space, canvas) {
     });
 
     this.canvas.addEventListener('click', function(e) {
-        var x = Math.floor(e.clientX / 5);
-        var y = Math.floor(e.clientY / 5);
-        var index = Math.floor((y - 1) * that.width) + x;
+        var x = Math.floor(e.clientX / 5) - 1;
+        var y = Math.floor(e.clientY / 5) - 1;
+        var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
         that.data[index] = pixel.color;
         that.data.render();
