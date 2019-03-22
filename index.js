@@ -3,7 +3,7 @@ function Site(space, canvas) {
     var firebasedata;
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
-    space.once('value').then(()=>(snapshot) {
+    space.once('value').then((snapshot)=>{
         firebasedata = snapshot.val();
         that.width = firebasedata.width;
         that.height = firebasedata.height;
