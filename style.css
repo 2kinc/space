@@ -1,0 +1,66 @@
+canvas {
+    margin: 0;
+}
+
+#main-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#palette {
+    height: 120px;
+    width: 100%;
+    background: #333;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.palette-color {
+    height: 80px;
+    width: 80px;
+    margin: 20px;
+    display: inline-block;
+}
+
+.palette-color:nth-child(even) {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#black {
+    background: rgb(0,0,0);
+}
+
+#white {
+    background: rgb(255,255,255);
+}
+
+#red {
+    background: rgb(244,67,54);
+}
+
+#orange {
+    background: rgb(255,152,0);
+}
+
+#yellow {
+    background: rgb(255,235,59);
+}
+
+#green {
+    background: rgb(76,175,80);
+}
+
+#blue {
+    background: rgb(33,150,243);
+}
+
+#purple {
+    background: rgb(156,39,176);
+}
+
+#pink {
+    background: rgb(233,30,99);
+}
