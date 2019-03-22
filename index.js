@@ -3,7 +3,7 @@ function Site(space, canvas) {
     var firebasedata;
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
-    space.once('value').then(function (snapshot) {
+    space.once('value').then(()=>(snapshot) {
         firebasedata = snapshot.val();
         that.width = firebasedata.width;
         that.height = firebasedata.height;
@@ -32,10 +32,10 @@ function Site(space, canvas) {
             that.canvas.ctx.fillRect(this.x, this.y, this.size, this.size);
         };
     };
-    this.getDataKey = function(x, y) {
+    this.getDataKey = (x, y) => {
         return x + ', ' + y;
     };
-    this.getCoordinatesFromDataKey = function(key) {
+    this.getCoordinatesFromDataKey = (key) => {
         var a = key.split(', ');
         return {
             x: Number(a[0]),
@@ -69,6 +69,7 @@ function Site(space, canvas) {
     });
 
     this.canvas.addEventListener('click', function(e) {
+        if(this.canvas.classList.contains('disss')){return}
         var x = Math.floor(e.clientX / 5) - 1;
         var y = Math.floor(e.clientY / 5) - 1;
         var index = Math.floor(y * that.width) + x;
@@ -76,6 +77,8 @@ function Site(space, canvas) {
         that.data[index] = pixel.color;
         that.data.render();
         databaseref.child('data').set(JSON.parse(JSON.stringify(that.data)));
+        this.canvas.classList.add('disss');
+        setTimeout(()=>{this.canvas.classList.remove('disss')},30000)
     });
 
 }
@@ -87,7 +90,7 @@ var auth = app.auth();
 
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
 
-databaseref.on('child_changed', function (snapshot) {
+databaseref.on('child_changed', (snapshot) => {
     var value = snapshot.val();
     site.data = value;
     site.data.render = function() {
