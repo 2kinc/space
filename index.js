@@ -77,7 +77,7 @@ function Site(space, canvas) {
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
         databaseref.child('data/' + index).set(pixel.color);
-        that.canvas.classList.add('disss');
+        /*that.canvas.classList.add('disss');
         that.timer.show();
         var count = 15;
         var interval = setInterval(function () {
@@ -91,7 +91,7 @@ function Site(space, canvas) {
         setTimeout(()=>{
             that.canvas.classList.remove('disss');
             that.timer.hide();
-        },15000);
+        },15000);*/ //timer will be put back later
     });
 
 }
