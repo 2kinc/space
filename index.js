@@ -47,6 +47,7 @@ function Site(space, canvas) {
 
     this.colors = {
         black: 'rgb(0,0,0)',
+        gray: '#c2c2c2',
         white: 'rgb(255,255,255)',
         red: 'rgb(244,67,54)',
         orange: 'rgb(255,152,0)',
@@ -56,6 +57,7 @@ function Site(space, canvas) {
         indigo: 'rgb(63,81,181)',
         purple: 'rgb(156,39,176)',
         pink: 'rgb(233,30,99)',
+        peach: 'rgb(255, 203, 164)',
         brown: 'rgb(121,85,72)'
     };
 
