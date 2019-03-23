@@ -53,8 +53,10 @@ function Site(space, canvas) {
         yellow: 'rgb(255,235,59)',
         green: 'rgb(76,175,80)',
         blue: 'rgb(33,150,243)',
+        indigo: 'rgb(63,81,181)',
         purple: 'rgb(156,39,176)',
-        pink: 'rgb(233,30,99)'
+        pink: 'rgb(233,30,99)',
+        brown: 'rgb(121,85,72)'
     };
 
     this.selectedColor = this.colors.black;
