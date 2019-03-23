@@ -3,6 +3,7 @@ function Site(space, canvas) {
     var firebasedata;
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
+    this.timer = $('#timer');
     space.once('value').then((snapshot)=>{
         firebasedata = snapshot.val();
         that.width = firebasedata.width;
@@ -71,13 +72,24 @@ function Site(space, canvas) {
 
     this.canvas.addEventListener('click', function(e) {
         if(that.canvas.classList.contains('disss')){return}
-        var x = Math.floor(e.clientX / 5) - 1;
-        var y = Math.floor(e.clientY / 5) - 1;
+        var x = Math.floor((e.clientX + document.scrollingElement.scrollLeft) / 5) - 1;
+        var y = Math.floor((e.clientY + document.scrollingElement.scrollTop) / 5) - 1;
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
         databaseref.child('data/' + index).set(pixel.color);
         that.canvas.classList.add('disss');
-        setTimeout(()=>{that.canvas.classList.remove('disss')},30000)
+        that.timer.show();
+        var count = 15;
+        var interval = setInterval(function () {
+            if (count <= 0)
+                clearInterval(interval);
+            that.timer.text(count);
+            count--;
+        }, 1000);
+        setTimeout(()=>{
+            that.canvas.classList.remove('disss');
+            that.timer.hide();
+        },15000);
     });
 
 }
