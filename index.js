@@ -81,8 +81,10 @@ function Site(space, canvas) {
         that.timer.show();
         var count = 15;
         var interval = setInterval(function () {
-            if (count <= 0)
+            if (count <= 0){
+                that.timer.text(15);
                 clearInterval(interval);
+            }
             that.timer.text(count);
             count--;
         }, 1000);
