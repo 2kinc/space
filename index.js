@@ -4,7 +4,9 @@ function Site(space, canvas) {
     this.elements = {
         chat: $('#chat'),
         chatBody: $('#chat-body'),
-        chatInput: $('#chat-input')
+        chatInput: $('#chat-input'),
+        hideChat: $('#hide-chat'),
+        chatBodyInputContainer: $('#chat-body-input-container')
     };
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
@@ -156,4 +158,14 @@ site.elements.chatInput.keyup(function(e) {
     } else if (auth.currentUser == null && key === "enter") {
         alert('Sign in to 2K inc. to chat!');
     }
+});
+
+site.elements.hideChat.text('HIDE CHAT');
+
+site.elements.hideChat.click(function () {
+    site.elements.chat.toggleClass('hidden');
+    if (site.elements.hideChat.text() == 'HIDE CHAT')
+        site.elements.hideChat.text('SHOW CHAT');
+    else
+        site.elements.hideChat.text('HIDE CHAT');
 });

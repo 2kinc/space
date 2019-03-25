@@ -79,11 +79,12 @@ html {
     left: 3em;
     background: #00000099;
     color: white;
+    transition: all 0.6s;
 }
 
 #chat-body {
     max-width: 10em;
-    max-height: 16em;
+    max-height: 13.7em;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 1em;
@@ -102,4 +103,20 @@ html {
 #chat-input::placeholder {
     color: white;
     opacity: 0.7;
+}
+
+#hide-chat {
+    text-transform: uppercase;
+    border: 1px #333 solid;
+    padding: 0.5em;
+}
+
+.hidden {
+    height: 0;
+    overflow: hidden;
+}
+
+#chat.hidden {
+    height: 2em;
+    overflow: hidden;
 }
