@@ -70,3 +70,36 @@ html {
     max-height: calc(100vh - 120px);
     overflow: scroll;
 }
+
+#chat {
+    width: 10em;
+    height: 18em;
+    position: absolute;
+    top: 3em;
+    left: 3em;
+    background: #00000099;
+    color: white;
+}
+
+#chat-body {
+    max-width: 10em;
+    max-height: 16em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1em;
+}
+
+#chat-input {
+    width: calc(100% - 2em);
+    height: 2em;
+    border: 1px #333 solid;
+    background: #00000099;
+    color: white;
+    font-family: inherit;
+    padding: 0 1em;
+}
+
+#chat-input::placeholder {
+    color: white;
+    opacity: 0.7;
+}

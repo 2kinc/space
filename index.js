@@ -1,10 +1,15 @@
 function Site(space, canvas) {
     var that = this;
     var firebasedata;
+    this.elements = {
+        chat: $('#chat'),
+        chatBody: $('#chat-body'),
+        chatInput: $('#chat-input')
+    };
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
     this.timer = $('#timer');
-    space.once('value').then((snapshot)=>{
+    space.once('value').then((snapshot) => {
         firebasedata = snapshot.val();
         that.width = firebasedata.width;
         that.height = firebasedata.height;
@@ -79,7 +84,9 @@ function Site(space, canvas) {
     });
 
     this.canvas.addEventListener('click', function(e) {
-        if(that.canvas.classList.contains('disss')){return}
+        if (that.canvas.classList.contains('disss')) {
+            return
+        }
         var x = Math.floor((e.clientX + document.querySelector('#canvas-container').scrollLeft) / 5) - 1;
         var y = Math.floor((e.clientY + document.querySelector('#canvas-container').scrollTop) / 5) - 1;
         var index = Math.floor(y * that.width) + x;
@@ -101,12 +108,12 @@ function Site(space, canvas) {
             that.timer.hide();
         },15000);*/ //timer will be put back later
     });
-
 }
 
 var app = firebase;
 var database = firebase.database();
 var databaseref = database.ref('space').child('main');
+var chatdatabaseref = database.ref('chat');
 var auth = app.auth();
 
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
@@ -125,4 +132,28 @@ databaseref.on('child_changed', (snapshot) => {
         }
     };
     site.data.render();
+});
+
+chatdatabaseref.on('child_added', (snapshot) => {
+    var value = snapshot.val();
+    var p = document.createElement('p');
+    p.innerText = value.name + ': ' + value.message;
+    site.elements.chatBody.prepend(p);
+})
+
+site.elements.chatInput.keyup(function(e) {
+    var key = e.key.toLowerCase();
+    if (key === "enter" && site.elements.chatInput.val() != '' && auth.currentUser != null) {
+        var d = new Date();
+        var chat = {
+            message: site.elements.chatInput.val(),
+            profilePicture: auth.currentUser.photoURL,
+            name: auth.curren.displayName,
+            time: d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
+        };
+        chatdatabaseref.push().set(chat);
+        site.elements.chatInput.val('');
+    } else if (auth.currentUser == null && key === "enter") {
+        alert('Sign in to 2K inc. to chat!');
+    }
 });
