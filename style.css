@@ -79,7 +79,7 @@ html {
     left: 3em;
     background: #00000099;
     color: white;
-    transition: all 0.6s;
+    transition: height 0.6s;
 }
 
 #chat-body {
@@ -109,6 +109,8 @@ html {
     text-transform: uppercase;
     border: 1px #333 solid;
     padding: 0.5em;
+    cursor: pointer;
+    user-select: none;
 }
 
 .hidden {
