@@ -10,6 +10,8 @@ function Site(space, canvas) {
         that.height = firebasedata.height;
         that.canvas.width = that.width * 5;
         that.canvas.height = that.height * 5;
+        this.canvas.ctx.fillStyle = 'white';
+        that.canvas.ctx.fillRect(0, 0, that.height * 5, that.height * 5);
         that.data = firebasedata.data;
         that.data.render = function() {
             for (var item in that.data) {
@@ -78,8 +80,8 @@ function Site(space, canvas) {
 
     this.canvas.addEventListener('click', function(e) {
         if(that.canvas.classList.contains('disss')){return}
-        var x = Math.floor((e.clientX + document.scrollingElement.scrollLeft) / 5) - 1;
-        var y = Math.floor((e.clientY + document.scrollingElement.scrollTop) / 5) - 1;
+        var x = Math.floor((e.clientX + document.querySelector('#canvas-container').scrollLeft) / 5) - 1;
+        var y = Math.floor((e.clientY + document.querySelector('#canvas-container').scrollTop) / 5) - 1;
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
         databaseref.child('data/' + index).set(pixel.color);
