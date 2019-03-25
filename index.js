@@ -52,11 +52,13 @@ function Site(space, canvas) {
         red: 'rgb(244,67,54)',
         orange: 'rgb(255,152,0)',
         yellow: 'rgb(255,235,59)',
+        mint: '#00e676',
         green: 'rgb(76,175,80)',
         blue: 'rgb(33,150,243)',
         indigo: 'rgb(63,81,181)',
         purple: 'rgb(156,39,176)',
-        pink: 'rgb(233,30,99)',
+        pink: '#ff80ab',
+        hotpink: 'rgb(233,30,99)',
         peach: 'rgb(255, 203, 164)',
         brown: 'rgb(121,85,72)'
     };
