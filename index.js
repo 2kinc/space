@@ -148,7 +148,7 @@ site.elements.chatInput.keyup(function(e) {
         var chat = {
             message: site.elements.chatInput.val(),
             profilePicture: auth.currentUser.photoURL,
-            name: auth.curren.displayName,
+            name: auth.currentUser.displayName,
             time: d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
         };
         chatdatabaseref.push().set(chat);
