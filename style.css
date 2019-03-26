@@ -122,3 +122,10 @@ html {
     height: 2em;
     overflow: hidden;
 }
+
+#mini-canvas {
+    border: 2px black solid;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

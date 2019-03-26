@@ -6,7 +6,8 @@ function Site(space, canvas) {
         chatBody: $('#chat-body'),
         chatInput: $('#chat-input'),
         hideChat: $('#hide-chat'),
-        chatBodyInputContainer: $('#chat-body-input-container')
+        chatBodyInputContainer: $('#chat-body-input-container'),
+        miniCanvas: $('#mini-canvas')
     };
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
@@ -132,6 +133,11 @@ databaseref.on('child_changed', (snapshot) => {
             var pixel = new site.Pixel(x, y, site.data[item], 5);
             pixel.display();
         }
+        var image = new Image();
+        image.data = site.canvas.getImageData(0, 0, that.width * 5, that.height * 5);
+        image.onload = function () {
+            document.querySelector('#mini-canvas').getContext('2d').drawImage(image, 0, 0, 100, 100);
+        };
     };
     site.data.render();
 });
