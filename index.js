@@ -68,7 +68,7 @@ function Site(space, canvas) {
         indigo: 'rgb(63,81,181)',
         purple: 'rgb(156,39,176)',
         pink: '#ff80ab',
-        brown: 'rgb(121,85,72)',
+        brown: 'rgb(160,82,45)',
         peach: 'rgb(255, 203, 164)',
     };
 
