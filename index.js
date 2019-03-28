@@ -70,6 +70,7 @@ function Site(space, canvas) {
         pink: '#ff80ab',
         brown: 'rgb(160,82,45)',
         peach: 'rgb(255, 203, 164)',
+        maroon: 'rgb(128, 0, 0)',
     };
 
     this.selectedColor = this.colors.black;
