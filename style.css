@@ -3,6 +3,7 @@ canvas {
 }
 
 #main-canvas {
+    image-rendering: pixelated;
 }
 
 #palette {
