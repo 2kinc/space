@@ -9,6 +9,7 @@ function Site(space, canvas) {
         chatBodyInputContainer: $('#chat-body-input-container'),
         miniCanvas: $('#mini-canvas')
     };
+    this.data = {};
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
     this.timer = $('#timer');
@@ -21,7 +22,7 @@ function Site(space, canvas) {
         this.canvas.ctx.fillStyle = 'white';
         that.canvas.ctx.fillRect(0, 0, that.height * 5, that.height * 5);
         that.data = firebasedata.data;
-        that.data.render = function() {
+        that.data.render = function () {
             for (var item in that.data) {
                 if (item == null)
                     return;
@@ -34,12 +35,12 @@ function Site(space, canvas) {
         that.data.render();
         that.startTime = new Date().getTime();
     });
-    this.Pixel = function(x, y, color, size) {
+    this.Pixel = function (x, y, color, size) {
         this.x = x * size;
         this.y = y * size;
         this.color = color;
         this.size = size;
-        this.display = function() {
+        this.display = function () {
             that.canvas.ctx.fillStyle = color;
             that.canvas.ctx.fillRect(this.x, this.y, this.size, this.size);
         };
@@ -75,18 +76,18 @@ function Site(space, canvas) {
 
     this.selectedColor = this.colors.black;
 
-    $('.palette-color').each(function() {
+    $('.palette-color').each(function () {
         this.style.background = that.colors[this.id];
-        $(this).click(function() {
+        $(this).click(function () {
             that.selectedColor = that.colors[this.id];
-            $('.palette-color').each(function() {
+            $('.palette-color').each(function () {
                 $(this).removeClass('palette-color-selected');
             });
             $(this).toggleClass('palette-color-selected');
         });
     });
 
-    this.canvas.addEventListener('click', function(e) {
+    this.canvas.addEventListener('click', function (e) {
         if (that.canvas.classList.contains('disss')) {
             return
         }
@@ -121,10 +122,13 @@ var auth = app.auth();
 
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
 
-databaseref.on('child_changed', (snapshot) => {
+databaseref.child('data').on('child_added', function (snapshot) {
     var value = snapshot.val();
-    site.data = value;
-    site.data.render = function() {
+    if (snapshot.key == 'width' || snapshot.key == 'height')
+        return;
+    var index = Number(snapshot.key);
+    site.data[index] = value;
+    site.data.render = function () {
         for (var item in site.data) {
             if (item == null)
                 return;
@@ -133,13 +137,11 @@ databaseref.on('child_changed', (snapshot) => {
             var pixel = new site.Pixel(x, y, site.data[item], 5);
             pixel.display();
         }
-        var image = new Image();
-        image.data = site.canvas.getImageData(0, 0, that.width * 5, that.height * 5);
-        image.onload = function () {
-            document.querySelector('#mini-canvas').getContext('2d').drawImage(image, 0, 0, 100, 100);
-        };
     };
-    site.data.render();
+    var x = Math.floor(index % site.width) + 1;
+    var y = Math.floor(index / site.width) + 1;
+    var pixel = new site.Pixel(x, y, value, 5);
+    pixel.display();
 });
 
 chatdatabaseref.on('child_added', (snapshot) => {
@@ -149,7 +151,7 @@ chatdatabaseref.on('child_added', (snapshot) => {
     site.elements.chatBody.prepend(p);
 })
 
-site.elements.chatInput.keyup(function(e) {
+site.elements.chatInput.keyup(function (e) {
     var key = e.key.toLowerCase();
     if (key === "enter" && site.elements.chatInput.val() != '' && auth.currentUser != null) {
         var d = new Date();
