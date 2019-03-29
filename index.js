@@ -144,6 +144,28 @@ databaseref.child('data').on('child_added', function (snapshot) {
     pixel.display();
 });
 
+databaseref.child('data').on('child_changed', function (snapshot) {
+    var value = snapshot.val();
+    if (snapshot.key == 'width' || snapshot.key == 'height')
+        return;
+    var index = Number(snapshot.key);
+    site.data[index] = value;
+    site.data.render = function () {
+        for (var item in site.data) {
+            if (item == null)
+                return;
+            var x = Math.floor(item % site.width) + 1;
+            var y = Math.floor(item / site.width) + 1;
+            var pixel = new site.Pixel(x, y, site.data[item], 5);
+            pixel.display();
+        }
+    };
+    var x = Math.floor(index % site.width) + 1;
+    var y = Math.floor(index / site.width) + 1;
+    var pixel = new site.Pixel(x, y, value, 5);
+    pixel.display();
+});
+
 chatdatabaseref.on('child_added', (snapshot) => {
     var value = snapshot.val();
     var p = document.createElement('p');
