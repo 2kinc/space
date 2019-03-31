@@ -59,7 +59,9 @@ canvas {
 
 html {
     overflow: hidden;
-    font-family: 'Roboto Mono', monospace;
+    font-family: neue-haas-unica, sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 #canvas-container {
@@ -110,7 +112,7 @@ html {
     border-bottom-right-radius: 4px;
     position: relative;
     left: -2px;
-    top: -2px;
+    top: -5px;
 }
 
 #chat-input::placeholder {
@@ -121,7 +123,7 @@ html {
 #hide-chat {
     text-transform: uppercase;
     border-bottom: 2px white solid;
-    padding: 0.5em;
+    padding: 0.5em 1em;
     cursor: pointer;
     user-select: none;
 }
@@ -142,4 +144,8 @@ html {
     position: absolute;
     right: 10px;
     top: 10px;
+}
+
+::-webkit-scrollbar {
+    background: transparent;
 }
