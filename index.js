@@ -33,7 +33,7 @@ function Site(space, canvas) {
             }
         };
         that.data.render();
-        that.startTime = new Date().getTime();
+        that.elements.pixelCount.text(that.pixelCount + ' pixels filled (' + (that.pixelCount / (that.width * that.height) * 100).toFixed(3) + '% of map)');
     });
     this.Pixel = function (x, y, color, size) {
         this.x = x * size;
@@ -152,7 +152,8 @@ databaseref.child('data').on('child_added', function (snapshot) {
     var pixel = new site.Pixel(x, y, value, 5);
     pixel.display();
     site.pixelCount++;
-    site.elements.pixelCount.text(site.pixelCount + ' pixels placed');
+    if (site.width != undefined && site.height != undefined)
+        site.elements.pixelCount.text(site.pixelCount + ' pixels filled (' + (site.pixelCount / (site.width * site.height) * 100).toFixed(3) + '% of map)');
 });
 
 databaseref.child('data').on('child_changed', function (snapshot) {
@@ -175,8 +176,6 @@ databaseref.child('data').on('child_changed', function (snapshot) {
     var y = Math.floor(index / site.width) + 1;
     var pixel = new site.Pixel(x, y, value, 5);
     pixel.display();
-    site.pixelCount++;
-    site.elements.pixelCount.text(site.pixelCount + ' pixels placed');
 });
 
 chatdatabaseref.on('child_added', (snapshot) => {
