@@ -182,6 +182,10 @@ html {
     background: white;
 }
 
+::-webkit-scrollbar-corner {
+    background: black;
+}
+
 #pixel-count {
     position: absolute;
     bottom: 130px;
