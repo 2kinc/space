@@ -147,5 +147,18 @@ html {
 }
 
 ::-webkit-scrollbar {
-    background: transparent;
+    background: #000000;
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 5px;
+}
+
+#pixel-count {
+    position: absolute;
+    bottom: 200px;
+    right: 30px;
+    pointer-events: none;
 }

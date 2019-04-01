@@ -7,7 +7,7 @@ function Site(space, canvas) {
         chatInput: $('#chat-input'),
         hideChat: $('#hide-chat'),
         chatBodyInputContainer: $('#chat-body-input-container'),
-        miniCanvas: $('#mini-canvas')
+        pixelCount: $('#pixel-count')
     };
     this.data = {};
     this.canvas = canvas;
@@ -121,6 +121,14 @@ var chatdatabaseref = database.ref('chat');
 var auth = app.auth();
 
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
+
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
 
 databaseref.child('data').on('child_added', function (snapshot) {
     var value = snapshot.val();
