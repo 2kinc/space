@@ -134,7 +134,7 @@ html {
 }
 
 #chat.hidden {
-    height: 2em;
+    height: 2.5em;
     overflow: hidden;
     border-radius: 4px;
 }
@@ -146,19 +146,45 @@ html {
     top: 10px;
 }
 
+@keyframes colors {
+    0% {
+        background-color: #ff073a;
+    }
+    20% {
+        background-color: #ccff00;
+    }
+    40% {
+        background-color: #39ff14;
+    }
+    60% {
+        background-color: #1b03a3;
+    }
+    80% {
+        background-color: #bc13fe;
+    }
+    100% {
+        background-color: #ff073a;
+    }
+}
+
 ::-webkit-scrollbar {
-    background: #000000;
+    background: black;
     width: 10px;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #555;
     border-radius: 5px;
+    border: 2px white solid;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: white;
 }
 
 #pixel-count {
     position: absolute;
-    bottom: 200px;
-    right: 30px;
-    pointer-events: none;
+    bottom: 130px;
+    right: 12px;
+    background: white;
 }

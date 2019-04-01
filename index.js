@@ -112,6 +112,7 @@ function Site(space, canvas) {
             that.timer.hide();
         },15000);*/ //timer will be put back later
     });
+    this.pixelCount = 0;
 }
 
 var app = firebase;
@@ -122,7 +123,7 @@ var auth = app.auth();
 
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
 
-Object.size = function(obj) {
+Object.size = function (obj) {
     var size = 0, key;
     for (key in obj) {
         if (obj.hasOwnProperty(key)) size++;
@@ -150,6 +151,8 @@ databaseref.child('data').on('child_added', function (snapshot) {
     var y = Math.floor(index / site.width) + 1;
     var pixel = new site.Pixel(x, y, value, 5);
     pixel.display();
+    site.pixelCount++;
+    site.elements.pixelCount.text(site.pixelCount + ' pixels placed');
 });
 
 databaseref.child('data').on('child_changed', function (snapshot) {
@@ -207,3 +210,18 @@ site.elements.hideChat.click(function () {
     else
         site.elements.hideChat.text('HIDE CHAT');
 });
+
+site.elements.pixelCount.on({
+    mouseover: function () {
+        if (site.elements.pixelCount.css('right') == '12px')
+            site.elements.pixelCount.css({
+                right: 'unset',
+                left: '0'
+            });
+        else
+            site.elements.pixelCount.css({
+                right: '12px',
+                left: 'unset'
+            });
+    }
+})
