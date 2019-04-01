@@ -175,6 +175,8 @@ databaseref.child('data').on('child_changed', function (snapshot) {
     var y = Math.floor(index / site.width) + 1;
     var pixel = new site.Pixel(x, y, value, 5);
     pixel.display();
+    site.pixelCount++;
+    site.elements.pixelCount.text(site.pixelCount + ' pixels placed');
 });
 
 chatdatabaseref.on('child_added', (snapshot) => {
