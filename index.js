@@ -7,7 +7,8 @@ function Site(space, canvas) {
         chatInput: $('#chat-input'),
         hideChat: $('#hide-chat'),
         chatBodyInputContainer: $('#chat-body-input-container'),
-        pixelCount: $('#pixel-count')
+        pixelCount: $('#pixel-count'),
+        loading: $('#loading')
     };
     this.data = {};
     this.canvas = canvas;
@@ -19,7 +20,7 @@ function Site(space, canvas) {
         that.height = firebasedata.height;
         that.canvas.width = that.width * 5;
         that.canvas.height = that.height * 5;
-        this.canvas.ctx.fillStyle = 'white';
+        that.canvas.ctx.fillStyle = 'white';
         that.canvas.ctx.fillRect(0, 0, that.height * 5, that.height * 5);
         that.data = firebasedata.data;
         that.data.render = function () {
@@ -34,6 +35,7 @@ function Site(space, canvas) {
         };
         that.data.render();
         that.elements.pixelCount.text(that.pixelCount + ' pixels filled (' + (that.pixelCount / (that.width * that.height) * 100).toFixed(3) + '% of map)');
+        that.elements.loading.hide();
     });
     this.Pixel = function (x, y, color, size) {
         this.x = x * size;
