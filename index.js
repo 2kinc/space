@@ -43,8 +43,14 @@ function Site(space, canvas) {
         this.color = color;
         this.size = size;
         this.display = function () {
-            that.canvas.ctx.fillStyle = color;
-            that.canvas.ctx.fillRect(this.x, this.y, this.size, this.size);
+            if (this.color != 'gold') {
+                that.canvas.ctx.fillStyle = color;
+                that.canvas.ctx.fillRect(this.x, this.y, this.size, this.size);
+            } else {
+                var image = new Image();
+                image.src = 'gold-pixel.png';
+                that.canvas.ctx.drawImage(image, this.x, this.y, this.size, this.size);
+            }
         };
     };
     this.getDataKey = (x, y) => {
@@ -74,6 +80,7 @@ function Site(space, canvas) {
         brown: 'rgb(160,82,45)',
         peach: 'rgb(255, 203, 164)',
         maroon: 'rgb(128, 0, 0)',
+        gold: 'gold'
     };
 
     this.selectedColor = this.colors.black;
