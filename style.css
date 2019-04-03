@@ -169,13 +169,15 @@ html {
 
 ::-webkit-scrollbar {
     background: black;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     border: 2px white solid;
+    min-width: 10px;
+    min-height: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -189,8 +191,14 @@ html {
 #pixel-count {
     position: absolute;
     bottom: 130px;
-    right: 12px;
-    background: white;
+    right: 10px;
+    background: black;
+    color: white;
+    padding: 0 0.4em;
+    border: 2px white solid;
+    border-bottom-width: 0;
+    border-right-width: 0;
+    border-top-left-radius: 4px;
 }
 
 @keyframes opacity {
@@ -228,4 +236,13 @@ html {
 
 #loading span:nth-child(3) {
     animation-delay: 0.6s;
+}
+
+#pixel-count.left-side {
+    left: 0;
+    right: unset;
+    border-left-width: 0;
+    border-right-width: 2px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 4px;
 }

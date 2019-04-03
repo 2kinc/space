@@ -223,15 +223,6 @@ site.elements.hideChat.click(function () {
 
 site.elements.pixelCount.on({
     mouseover: function () {
-        if (site.elements.pixelCount.css('right') == '12px')
-            site.elements.pixelCount.css({
-                right: 'unset',
-                left: '0'
-            });
-        else
-            site.elements.pixelCount.css({
-                right: '12px',
-                left: 'unset'
-            });
+        site.elements.pixelCount.toggleClass('left-side');
     }
 })
