@@ -230,11 +230,9 @@ site.elements.pixelCount.on({
     }
 });
 
-/*auth.onAuthStateChanged(function (user) {
+auth.onAuthStateChanged(function (user) {
     if (user) {
         var ref = database.ref('users/' + user.uid);
         ref.child('displayName').set(user.displayName);
-    } else {
-        auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     }
-});*/
+});
