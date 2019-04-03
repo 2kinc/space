@@ -11,31 +11,30 @@ function Site(space, canvas) {
         loading: $('#loading')
     };
     this.data = {};
+    this.data.render = function () {
+        for (var item in this.data) {
+            if (item == null)
+                return;
+            var x = Math.floor(item % that.width) + 1;
+            var y = Math.floor(item / that.width) + 1;
+            var pixel = new that.Pixel(x, y, that.data[item], 5);
+            pixel.display();
+        }
+    };
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
     this.timer = $('#timer');
-    space.once('value').then((snapshot) => {
-        firebasedata = snapshot.val();
-        that.width = firebasedata.width;
-        that.height = firebasedata.height;
-        that.canvas.width = that.width * 5;
+    space.child('height').once('value').then((snapshot) => {
+        var value = snapshot.val();
+        that.height = value;
         that.canvas.height = that.height * 5;
+    });
+    space.child('width').once('value').then((snapshot) => {
+        var value = snapshot.val();
+        that.width = value;
+        that.canvas.width = that.width * 5;
         that.canvas.ctx.fillStyle = 'white';
         that.canvas.ctx.fillRect(0, 0, that.height * 5, that.height * 5);
-        that.data = firebasedata.data;
-        that.data.render = function () {
-            for (var item in that.data) {
-                if (item == null)
-                    return;
-                var x = Math.floor(item % that.width) + 1;
-                var y = Math.floor(item / that.width) + 1;
-                var pixel = new that.Pixel(x, y, that.data[item], 5);
-                pixel.display();
-            }
-        };
-        that.data.render();
-        that.elements.pixelCount.text(that.pixelCount + ' pixels filled (' + (that.pixelCount / (that.width * that.height) * 100).toFixed(3) + '% of map)');
-        that.elements.loading.hide();
     });
     this.Pixel = function (x, y, color, size) {
         this.x = x * size;
@@ -187,6 +186,10 @@ databaseref.child('data').on('child_changed', function (snapshot) {
     pixel.display();
 });
 
+databaseref.child('data').limitToLast(1).on('value', function () {
+    site.elements.loading.hide();
+})
+
 chatdatabaseref.on('child_added', (snapshot) => {
     var value = snapshot.val();
     var p = document.createElement('p');
@@ -225,4 +228,13 @@ site.elements.pixelCount.on({
     mouseover: function () {
         site.elements.pixelCount.toggleClass('left-side');
     }
-})
+});
+
+/*auth.onAuthStateChanged(function (user) {
+    if (user) {
+        var ref = database.ref('users/' + user.uid);
+        ref.child('displayName').set(user.displayName);
+    } else {
+        auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    }
+});*/
