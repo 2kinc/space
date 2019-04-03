@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/lku7gbz.css">
+    <link rel="preload" href="//img1.wsimg.com/ux/fonts/sherpa/1.0/gdsherpa-regular.woff2" as="font" type="font/woff2"
+        crossorigin="">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="2k-space-icon.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133299888-1"></script>
+    <script>
+
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-133299888-1');
+
+    </script>
+    <title>2K Space</title>
+</head>
+
+<body>
+    <div id="canvas-container" style="max-height: 100vh; height: 100vh; overflow: hidden;">
+        <canvas id="main-canvas" style="pointer-events: none; position: absolute;"></canvas>
+    </div>
+
+    <div id="loading"><img src="2K-space-logo.png" alt="2K Space" height="200px"> <br>
+        <img src="space-loading-animation.gif" alt="Loading animation" height="60px"> <br> <br>
+        ZEN MODE.
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyADD6YWKrzibRMwJNi1FwUR0jcR0GitZPI",
+            authDomain: "k-inc-232222.firebaseapp.com",
+            databaseURL: "https://k-inc-232222.firebaseio.com",
+            projectId: "k-inc-232222",
+            storageBucket: "k-inc-232222.appspot.com",
+            messagingSenderId: "827804821456"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="index.js"></script>
+    <script src="zen.js"></script>
+</body>
+
+</html>
