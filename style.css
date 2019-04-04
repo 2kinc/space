@@ -31,7 +31,7 @@ canvas {
 }
 
 .palette-color-selected {
-    margin-bottom: 30px;
+    border-bottom-width: 17px;
 }
 
 .palette-color:nth-child(even) {
