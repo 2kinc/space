@@ -65,6 +65,8 @@ function Site(space, canvas) {
 
     this.colors = {
         black: 'rgb(0,0,0)',
+        chungusgray: '#604D53',
+        darkgray: '#333333',
         gray: '#c2c2c2',
         white: 'rgb(255,255,255)',
         red: 'rgb(244,67,54)',
@@ -77,6 +79,7 @@ function Site(space, canvas) {
         purple: 'rgb(156,39,176)',
         pink: '#ff80ab',
         brown: 'rgb(160,82,45)',
+        ogbrown: '#795548',
         peach: 'rgb(255, 203, 164)',
         maroon: 'rgb(128, 0, 0)',
         gold: 'gold'
@@ -91,7 +94,7 @@ function Site(space, canvas) {
             $('.palette-color').each(function () {
                 $(this).removeClass('palette-color-selected');
             });
-            $(this).toggleClass('palette-color-selected');
+            $(this).addClass('palette-color-selected');
         });
     });
 

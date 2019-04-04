@@ -9,7 +9,7 @@ canvas {
 #palette {
     height: 120px;
     width: 100%;
-    background: #333;
+    background: black;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -20,18 +20,18 @@ canvas {
 }
 
 .palette-color {
-    height: 80px;
-    width: 80px;
+    height: 70px;
+    width: 70px;
     margin: 20px;
+    margin-top: 10px;
     display: inline-block;
-    border-radius: 6px;
+    border-radius: 4px;
     box-shadow: 8px 14px 38px rgba(0,0,0,.3), 1px 3px 8px rgba(0,0,0,.3);
-    transition: all 0.2s ease;
+    border: 2px white solid;
 }
 
 .palette-color-selected {
-    box-shadow: 8px 14px 38px rgba(0,0,0,.5), 1px 3px 8px rgba(0,0,0,.5);
-    transform: scale(1.2);
+    margin-bottom: 30px;
 }
 
 .palette-color:nth-child(even) {
