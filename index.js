@@ -239,3 +239,23 @@ auth.onAuthStateChanged(function (user) {
         ref.child('displayName').set(user.displayName);
     }
 });
+
+/*database.ref('onlineusers').once('value').then(function (snapshot) {
+    var value = snapshot.val();
+    if (value == undefined || value == null) {
+        database.ref('onlineusers').set(1);
+    } else {
+        database.ref('onlineusers').set(value + 1);
+    }
+});
+
+window.onbeforeunload = function () {
+    database.ref('onlineusers').once('value').then(function (snapshot) {
+        var value = snapshot.val();
+        if (value == undefined || value == null) {
+            database.ref('onlineusers').set(0);
+        } else {
+            database.ref('onlineusers').set(value - 1);
+        }
+    });
+};*/
