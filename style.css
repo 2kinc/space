@@ -114,7 +114,7 @@ html {
     border-bottom-right-radius: 4px;
     position: relative;
     left: -2px;
-    top: -5px;
+    top: -6px;
 }
 
 #chat-input::placeholder {
