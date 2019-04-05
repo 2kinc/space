@@ -103,6 +103,15 @@ function Site(space, canvas) {
     this.canvas.addEventListener('click', function (e) {
         if (that.canvas.classList.contains('disss')) {
             return;
+        } else if (auth.currentUser == null) {
+            that.elements.loading.html('');
+            var el = document.createElement('p');
+            el.innerText = 'Sign in to 2K inc!';
+            el.addEventListener('click', function () {
+                auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+            });
+            that.elements.loading.append(el);
+            that.elements.loading.show();
         }
         var x = Math.floor((e.clientX + document.querySelector('#canvas-container').scrollLeft) / 5) - 1;
         var y = Math.floor((e.clientY + document.querySelector('#canvas-container').scrollTop) / 5) - 1;
@@ -192,7 +201,8 @@ databaseref.child('data').on('child_changed', function (snapshot) {
 });
 
 databaseref.child('data').limitToLast(1).on('value', function () {
-    site.elements.loading.hide();
+    if (site.elements.loading.text() != 'Sign in to 2K inc!')
+        site.elements.loading.hide();
 })
 
 chatdatabaseref.on('child_added', (snapshot) => {
@@ -248,6 +258,23 @@ auth.onAuthStateChanged(function (user) {
         var ref = database.ref('users/' + user.uid);
         ref.child('displayName').set(user.displayName);
         ref.child('photoURL').set(user.photoURL);
+        if (site.elements.loading.text() == 'Sign in to 2K inc!')
+            site.elements.loading.hide();
+        database.ref('users/' + auth.currentUser.uid + '/banned').once('value').then(function (snap) {
+            var banned = snap.val();
+            if (banned == true) {
+                document.body.innerHTML = "Oof. Feels bad. You've been banned from 2K space.";
+            }
+        });
+    } else {
+        site.elements.loading.html('');
+        var el = document.createElement('p');
+        el.innerText = 'Sign in to 2K inc!';
+        el.addEventListener('click', function () {
+            auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        });
+        site.elements.loading.append(el);
+        site.elements.loading.show();
     }
 });
 
