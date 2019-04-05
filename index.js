@@ -172,17 +172,18 @@ function Site(space, canvas) {
                 }
             }
             var span2 = document.createElement('span');
-            span2.innerText = ' at ' + m.time;
+            span2.innerText = ' at ' + m.time + ': ';
+            span2.style.display = 'none';
             messageinfo.appendChild(span);
             messageinfo.appendChild(span2);
         }).catch(function (err) {
             console.log(err);
         });
         messageinfo.className = 'message-info';
-        var wrapper = document.createElement('span');
+        var wrapper = document.createElement('div');
         wrapper.className = 'message';
-        wrapper.appendChild(p);
         wrapper.appendChild(messageinfo);
+        wrapper.appendChild(p);
         this.elements.chatBody.prepend(wrapper);
     }
 }

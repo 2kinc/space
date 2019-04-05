@@ -78,7 +78,7 @@ html {
 }
 
 #chat {
-    width: 10em;
+    width: 15em;
     height: 18em;
     position: absolute;
     top: 3em;
@@ -94,7 +94,7 @@ html {
 }
 
 #chat-body {
-    max-width: 10em;
+    max-width: 15em;
     max-height: 13.7em;
     overflow-y: auto;
     overflow-x: hidden;
@@ -269,4 +269,33 @@ html {
     border-right-width: 2px;
     border-top-left-radius: 0;
     border-top-right-radius: 4px;
+}
+
+.message {
+    margin-bottom: 1em;
+}
+
+.trait::after {
+    border-radius: 4px;
+    padding: 2px;
+    margin-left: 0.5em;
+    border: 2px white solid;
+    min-width: 5em;
+}
+
+.trait._dev::after {
+    background: black;
+    color: white;
+    font-family: 'Roboto Mono', monospace;
+    content: 'Dev';
+}
+
+.trait._2kinc::after {
+    background: black;
+    color: white;
+    content: '2K inc.';
+}
+
+.message-info::after {
+    content: ': ';
 }
