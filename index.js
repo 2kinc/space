@@ -296,3 +296,5 @@ presenceRef.on("value", function (snap) {
 listRef.on("value", function (snap) {
     site.elements.userCount.text(snap.numChildren() + ' online');
 });
+
+console.log("%c2K inc. %cWant to become a 2K inc developer? Do not worry, child. Fork one of our repositories on Github and we'll hit you up.", 'font-size: 4em; font-family: neue-haas-unica, sans-serif;', 'font-size: 1em; color: green;');
