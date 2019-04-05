@@ -249,6 +249,22 @@ html {
 
 #user-count {
     position: absolute;
-    right: 3em;
-    top: 3em;
+    bottom: calc(132px + 1.5em);
+    right: 10px;
+    background: black;
+    color: white;
+    padding: 0 0.4em;
+    border: 2px white solid;
+    border-bottom-width: 0;
+    border-right-width: 0;
+    border-top-left-radius: 4px;
+}
+
+#user-count.left-side {
+    right: unset;
+    left: 0;
+    border-left-width: 0;
+    border-right-width: 2px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 4px;
 }

@@ -231,6 +231,14 @@ site.elements.hideChat.click(function () {
 site.elements.pixelCount.on({
     mouseover: function () {
         site.elements.pixelCount.toggleClass('left-side');
+        site.elements.userCount.toggleClass('left-side');
+    }
+});
+
+site.elements.userCount.on({
+    mouseover: function () {
+        site.elements.pixelCount.toggleClass('left-side');
+        site.elements.userCount.toggleClass('left-side');
     }
 });
 
