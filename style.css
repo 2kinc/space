@@ -291,7 +291,6 @@ html {
 .trait._dev::after {
     background: black;
     color: white;
-    font-family: 'Roboto Mono', monospace;
     content: 'Dev';
 }
 
