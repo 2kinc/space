@@ -136,6 +136,55 @@ function Site(space, canvas) {
         },15000);*/ //timer will be put back later
     });
     this.pixelCount = 0;
+    this.pushMessage = function () {
+        if (this.elements.chatInput.val() != '' && auth.currentUser != undefined) {
+            var d = new Date();
+            var chat = {
+                message: that.elements.chatInput.val(),
+                user: auth.currentUser.uid,
+                time: d.toLocaleTimeString() + ' ' + d.toLocaleDateString()
+            };
+            chatdatabaseref.push().set(chat);
+            that.elements.chatInput.val('');
+            that.elements.chatInput.trigger('submit');
+        } else if (auth.currentUser == undefined) {
+            alert('Sign in to 2K inc. to chat!');
+        }
+    };
+    this.displayMessage = function (m) {
+        var p = document.createElement('span');
+        p.innerText = m.message;
+        p.className = 'message-body enlargable';
+        var messageinfo = document.createElement('span');
+        var user = {
+            displayName: 'Unknown'
+        };
+        database.ref('users/' + m.user).once('value').then(function (snap) {
+            user = snap.val();
+            var span = document.createElement('span');
+            span.innerText = user.displayName;
+            span.className = 'chat-username';
+            for (var trait in user.traits) {
+                if (user.traits[trait]) {
+                    var s = document.createElement('span');
+                    s.className = 'trait ' + '_' + trait;
+                    span.appendChild(s);
+                }
+            }
+            var span2 = document.createElement('span');
+            span2.innerText = ' at ' + m.time;
+            messageinfo.appendChild(span);
+            messageinfo.appendChild(span2);
+        }).catch(function (err) {
+            console.log(err);
+        });
+        messageinfo.className = 'message-info';
+        var wrapper = document.createElement('span');
+        wrapper.className = 'message';
+        wrapper.appendChild(p);
+        wrapper.appendChild(messageinfo);
+        this.elements.chatBody.prepend(wrapper);
+    }
 }
 
 var app = firebase;
@@ -207,26 +256,13 @@ databaseref.child('data').limitToLast(1).on('value', function () {
 })
 
 chatdatabaseref.on('child_added', (snapshot) => {
-    var value = snapshot.val();
-    var p = document.createElement('p');
-    p.innerText = value.name + ': ' + value.message;
-    site.elements.chatBody.prepend(p);
+    site.displayMessage(snapshot.val());
 })
 
 site.elements.chatInput.keyup(function (e) {
     var key = e.key.toLowerCase();
-    if (key === "enter" && site.elements.chatInput.val() != '' && auth.currentUser != null) {
-        var d = new Date();
-        var chat = {
-            message: site.elements.chatInput.val(),
-            profilePicture: auth.currentUser.photoURL,
-            name: auth.currentUser.displayName,
-            time: d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
-        };
-        chatdatabaseref.push().set(chat);
-        site.elements.chatInput.val('');
-    } else if (auth.currentUser == null && key === "enter") {
-        alert('Sign in to 2K inc. to chat!');
+    if (key === "enter") {
+        site.pushMessage();
     }
 });
 
