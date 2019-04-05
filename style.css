@@ -246,3 +246,9 @@ html {
     border-top-left-radius: 0;
     border-top-right-radius: 4px;
 }
+
+#user-count {
+    position: absolute;
+    right: 3em;
+    top: 3em;
+}

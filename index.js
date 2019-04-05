@@ -8,7 +8,8 @@ function Site(space, canvas) {
         hideChat: $('#hide-chat'),
         chatBodyInputContainer: $('#chat-body-input-container'),
         pixelCount: $('#pixel-count'),
-        loading: $('#loading')
+        loading: $('#loading'),
+        userCount: $('#user-count')
     };
     this.data = {};
     this.data.render = function () {
@@ -240,22 +241,21 @@ auth.onAuthStateChanged(function (user) {
     }
 });
 
-/*database.ref('onlineusers').once('value').then(function (snapshot) {
-    var value = snapshot.val();
-    if (value == undefined || value == null) {
-        database.ref('onlineusers').set(1);
-    } else {
-        database.ref('onlineusers').set(value + 1);
+var listRef = database.ref('onlineusers');
+var userRef = listRef.push();
+
+// Add ourselves to presence list when online.
+var presenceRef = database.ref(".info/connected");
+presenceRef.on("value", function (snap) {
+    if (snap.val()) {
+        // Remove ourselves when we disconnect.
+        userRef.onDisconnect().remove();
+
+        userRef.set(true);
     }
 });
 
-window.onbeforeunload = function () {
-    database.ref('onlineusers').once('value').then(function (snapshot) {
-        var value = snapshot.val();
-        if (value == undefined || value == null) {
-            database.ref('onlineusers').set(0);
-        } else {
-            database.ref('onlineusers').set(value - 1);
-        }
-    });
-};*/
+// Number of online users is the number of objects in the presence list.
+listRef.on("value", function (snap) {
+    site.elements.userCount.text(snap.numChildren() + ' online');
+});
