@@ -92,16 +92,17 @@ function Site(space, canvas) {
         this.style.background = that.colors[this.id];
         $(this).click(function () {
             that.selectedColor = that.colors[this.id];
-            $('.palette-color').each(function () {
-                this.classList.remove('selected');
-            });
             $(this).addClass('selected');
+            var thes = this;
+            setTimeout(function () {
+                $('.palette-color.selected').not(thes).removeClass('selected');
+            }, 300);
         });
     });
 
     this.canvas.addEventListener('click', function (e) {
         if (that.canvas.classList.contains('disss')) {
-            return
+            return;
         }
         var x = Math.floor((e.clientX + document.querySelector('#canvas-container').scrollLeft) / 5) - 1;
         var y = Math.floor((e.clientY + document.querySelector('#canvas-container').scrollTop) / 5) - 1;

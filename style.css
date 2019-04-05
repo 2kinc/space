@@ -28,10 +28,12 @@ canvas {
     border-radius: 4px;
     box-shadow: 8px 14px 38px rgba(0,0,0,.3), 1px 3px 8px rgba(0,0,0,.3);
     border: 2px white solid;
+    transition: border-bottom-width 0.1s;
 }
 
 .palette-color.selected {
     border-bottom-width: 17px;
+    transition: border-bottom-width 0.2s;
 }
 
 .palette-color:nth-child(even) {
