@@ -30,7 +30,7 @@ canvas {
     border: 2px white solid;
 }
 
-.palette-color-selected {
+.palette-color.selected {
     border-bottom-width: 17px;
 }
 

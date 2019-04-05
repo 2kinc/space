@@ -92,9 +92,9 @@ function Site(space, canvas) {
         $(this).click(function () {
             that.selectedColor = that.colors[this.id];
             $('.palette-color').each(function () {
-                $(this).removeClass('palette-color-selected');
+                this.classList.remove('selected');
             });
-            $(this).addClass('palette-color-selected');
+            $(this).addClass('selected');
         });
     });
 
