@@ -280,7 +280,12 @@ html {
     padding: 2px;
     margin-left: 0.5em;
     border: 2px white solid;
-    min-width: 5em;
+}
+
+.trait._joemama::after {
+    background: yellow;
+    color: black;
+    content: 'Joe Mama';
 }
 
 .trait._dev::after {
