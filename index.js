@@ -137,7 +137,7 @@ function Site(space, canvas) {
     });
     this.pixelCount = 0;
     this.pushMessage = function () {
-        if (this.elements.chatInput.val() != '' && auth.currentUser != undefined) {
+        if (this.elements.chatInput.val() != '' && auth.currentUser != null) {
             var d = new Date();
             var chat = {
                 message: that.elements.chatInput.val(),
@@ -164,16 +164,18 @@ function Site(space, canvas) {
             var span = document.createElement('span');
             span.innerText = user.displayName;
             span.className = 'chat-username';
-            for (var trait in user.traits) {
-                if (user.traits[trait]) {
-                    var s = document.createElement('span');
-                    s.className = 'trait ' + '_' + trait;
-                    span.appendChild(s);
+            if (user.traits != undefined || user.traits != null) {
+                for (var trait in user.traits) {
+                    if (user.traits[trait]) {
+                        var s = document.createElement('span');
+                        s.className = 'trait ' + '_' + trait;
+                        span.appendChild(s);
+                    }
                 }
-            }
-            if (user.traits.dev) {
-                p.style.background = 'linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3)';
-                p.style.animation = 'rainbow 18s infinite';
+                if (user.traits['2kinc']) {
+                    p.style.background = 'linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3)';
+                    p.style.animation = 'rainbow 18s infinite';
+                }
             }
             var span2 = document.createElement('span');
             span2.innerText = ' at ' + m.time;
