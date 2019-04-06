@@ -171,6 +171,9 @@ function Site(space, canvas) {
                     span.appendChild(s);
                 }
             }
+            if (user.traits.dev) {
+                p.style.animation = 'colors 10s infinite';
+            }
             var span2 = document.createElement('span');
             span2.innerText = ' at ' + m.time;
             span2.style.display = 'none';

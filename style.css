@@ -306,6 +306,8 @@ html {
     border-radius: 4px;
     padding: 0.4em;
     margin-bottom: 0.1em;
+    animation-timing-function: linear;
+    background: black;
 }
 
 .message-info {
@@ -313,6 +315,6 @@ html {
 }
 
 .message-body:hover {
-    background: white;
-    color: black;
+    filter: invert(1);
+    border: 2px black solid;
 }
