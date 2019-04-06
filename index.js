@@ -152,7 +152,7 @@ function Site(space, canvas) {
         }
     };
     this.displayMessage = function (m) {
-        var p = document.createElement('span');
+        var p = document.createElement('p');
         p.innerText = m.message;
         p.className = 'message-body enlargable';
         var messageinfo = document.createElement('span');
@@ -172,7 +172,7 @@ function Site(space, canvas) {
                 }
             }
             var span2 = document.createElement('span');
-            span2.innerText = ' at ' + m.time + ': ';
+            span2.innerText = ' at ' + m.time;
             span2.style.display = 'none';
             messageinfo.appendChild(span);
             messageinfo.appendChild(span2);
@@ -182,8 +182,8 @@ function Site(space, canvas) {
         messageinfo.className = 'message-info';
         var wrapper = document.createElement('div');
         wrapper.className = 'message';
-        wrapper.appendChild(messageinfo);
         wrapper.appendChild(p);
+        wrapper.appendChild(messageinfo);
         this.elements.chatBody.prepend(wrapper);
     }
 }
@@ -197,7 +197,8 @@ var auth = app.auth();
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
 
 Object.size = function (obj) {
-    var size = 0, key;
+    var size = 0,
+        key;
     for (key in obj) {
         if (obj.hasOwnProperty(key)) size++;
     }

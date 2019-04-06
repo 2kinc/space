@@ -280,6 +280,7 @@ html {
     padding: 2px;
     margin-left: 0.5em;
     border: 2px white solid;
+    font-size: 0.7em;
 }
 
 .trait._joemama::after {
@@ -300,6 +301,18 @@ html {
     content: '2K inc.';
 }
 
-.message-info::after {
-    content: ': ';
+.message-body {
+    border: 2px white solid;
+    border-radius: 4px;
+    padding: 0.4em;
+    margin-bottom: 0.1em;
+}
+
+.message-info {
+    font-size: 0.8em;
+}
+
+.message-body:hover {
+    background: white;
+    color: black;
 }
