@@ -191,6 +191,30 @@ function Site(space, canvas) {
         wrapper.appendChild(p);
         wrapper.appendChild(messageinfo);
         this.elements.chatBody.prepend(wrapper);
+    };
+
+    document.onkeypress = function (e) {
+        var key = e.key.toLowerCase();
+        if (key === '.') {
+            var index = $('.palette-color').index(document.querySelector('.palette-color.selected'));
+            var next = $('.palette-color')[index + 1];
+            that.selectedColor = that.colors[this.id];
+            $(next).addClass('selected');
+            setTimeout(function () {
+                $('.palette-color.selected').not(next).removeClass('selected');
+            }, 300);
+            console.log('hit');
+        }
+        if (key === ',') {
+            var index = $('.palette-color').index(document.querySelector('.palette-color.selected'));
+            var next = $('.palette-color')[index - 1];
+            that.selectedColor = that.colors[this.id];
+            $(next).addClass('selected');
+            setTimeout(function () {
+                $('.palette-color.selected').not(next).removeClass('selected');
+            }, 300);
+            console.log('hit');
+        }
     }
 }
 
@@ -342,4 +366,4 @@ listRef.on("value", function (snap) {
     site.elements.userCount.text(snap.numChildren() + ' online');
 });
 
-console.log("%c2K inc. %cWant to become a 2K inc developer? Do not worry, child. Fork one of our repositories on Github and we'll hit you up.", 'font-size: 4em; font-family: neue-haas-unica, sans-serif;', 'font-size: 1em; color: green;');
+console.log("%c2K inc. %cWant to become a 2K inc developer? Do not worry, CHILD. Fork one of our repositories on Github and we'll hit you up.", 'font-size: 4em; font-family: neue-haas-unica, sans-serif;', 'font-size: 1em; color: green;');
