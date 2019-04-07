@@ -73,6 +73,7 @@ function Site(space, canvas) {
         white: 'rgb(255,255,255)',
         red: 'rgb(244,67,54)',
         orange: 'rgb(255,152,0)',
+        orangeyellow: 'rgb(255, 179, 25)',
         yellow: 'rgb(255,235,59)',
         ivy: '#1de9b6',
         mint: '#00e676',
