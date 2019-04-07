@@ -9,7 +9,8 @@ function Site(space, canvas) {
         chatBodyInputContainer: $('#chat-body-input-container'),
         pixelCount: $('#pixel-count'),
         loading: $('#loading'),
-        userCount: $('#user-count')
+        userCount: $('#user-count'),
+        palette: $('#palette')
     };
     this.data = {};
     this.data.render = function () {
@@ -195,23 +196,35 @@ function Site(space, canvas) {
 
     document.onkeypress = function (e) {
         var key = e.key.toLowerCase();
-        if (key === '.') {
+        e.enabled = true;
+        if (key === '.' && e.enabled) {
+            e.enabled = false;
             var index = $('.palette-color').index(document.querySelector('.palette-color.selected'));
             var next = $('.palette-color')[index + 1];
-            that.selectedColor = that.colors[this.id];
+            var left = that.elements.palette[0].scrollLeft;
+            that.elements.palette.scrollLeft(left + 90);
+            that.selectedColor = that.colors[next.id];
             $(next).addClass('selected');
             setTimeout(function () {
                 $('.palette-color.selected').not(next).removeClass('selected');
+                e.enabled = true;
             }, 300);
             console.log('hit');
         }
-        if (key === ',') {
+        if (key === ',' && e.enabled) {
+            e.enabled = false;
             var index = $('.palette-color').index(document.querySelector('.palette-color.selected'));
             var next = $('.palette-color')[index - 1];
-            that.selectedColor = that.colors[this.id];
+            var left = that.elements.palette[0].scrollLeft;
+            that.elements.palette.scrollLeft(left - 90);
+            that.selectedColor = that.colors[next.id];
             $(next).addClass('selected');
-            setTimeout(function () {
+            if (timeout != undefined) {
+                clearTimeout(timeout);
+            }
+            var timeout = setTimeout(function () {
                 $('.palette-color.selected').not(next).removeClass('selected');
+                e.enabled = true;
             }, 300);
             console.log('hit');
         }
