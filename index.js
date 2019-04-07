@@ -77,7 +77,7 @@ function Site(space, canvas) {
         yellow: 'rgb(255,235,59)',
         ivy: '#1de9b6',
         mint: '#00e676',
-        lightgreen: '(25, 255, 25)',
+        lightgreen: 'rgb(25, 255, 25)',
         green: 'rgb(76,175,80)',
         darkgreen: 'rgb(0, 51, 0)',
         blue: 'rgb(33,150,243)',
