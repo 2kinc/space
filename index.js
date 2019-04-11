@@ -1,16 +1,17 @@
 function Site(space, canvas) {
     var that = this;
-    var firebasedata;
     this.elements = {
         chat: $('#chat'),
         chatBody: $('#chat-body'),
         chatInput: $('#chat-input'),
-        hideChat: $('#hide-chat'),
+        toggleChat: $('#toggle-chat'),
         chatBodyInputContainer: $('#chat-body-input-container'),
         pixelCount: $('#pixel-count'),
         loading: $('#loading'),
         userCount: $('#user-count'),
-        palette: $('#palette')
+        palette: $('#palette'),
+        grid: $('#grid'),
+        toggleGrid: $('#toggle-grid')
     };
     this.data = {};
     this.data.render = function () {
@@ -36,7 +37,11 @@ function Site(space, canvas) {
         that.width = value;
         that.canvas.width = that.width * 5;
         that.canvas.ctx.fillStyle = 'white';
-        that.canvas.ctx.fillRect(0, 0, that.height * 5, that.height * 5);
+        that.canvas.ctx.fillRect(0, 0, that.width * 5, that.height * 5);
+        that.elements.grid.css({
+            width: that.width * 5 + 'px',
+            height: that.height * 5 + 'px'
+        });
     });
     this.Pixel = function (x, y, color, size) {
         this.x = x * size;
@@ -177,8 +182,7 @@ function Site(space, canvas) {
                     }
                 }
                 if (user.traits['2kinc']) {
-                    p.style.background = 'linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3)';
-                    p.style.animation = 'rainbow 18s infinite';
+                    p.classList.add('k-rainbow');
                 }
             }
             var span2 = document.createElement('span');
@@ -241,15 +245,6 @@ var chatdatabaseref = database.ref('chat');
 var auth = app.auth();
 
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
-
-Object.size = function (obj) {
-    var size = 0,
-        key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
 
 databaseref.child('data').on('child_added', function (snapshot) {
     var value = snapshot.val();
@@ -314,15 +309,13 @@ site.elements.chatInput.keyup(function (e) {
     }
 });
 
-site.elements.hideChat.text('HIDE CHAT');
-
-site.elements.hideChat.click(function () {
+site.elements.toggleChat.click(function () {
     site.elements.chat.toggleClass('hidden');
-    if (site.elements.hideChat.text() == 'HIDE CHAT')
-        site.elements.hideChat.text('SHOW CHAT');
-    else
-        site.elements.hideChat.text('HIDE CHAT');
 });
+
+site.elements.toggleGrid.click(function () {
+    site.elements.grid.toggleClass('hidden');
+})
 
 site.elements.pixelCount.on({
     mouseover: function () {

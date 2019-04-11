@@ -122,8 +122,7 @@ html {
     opacity: 0.7;
 }
 
-#hide-chat {
-    text-transform: uppercase;
+#toggle-stuff {
     border-bottom: 2px white solid;
     padding: 0.5em 1em;
     cursor: pointer;
@@ -141,6 +140,10 @@ html {
     border-radius: 4px;
 }
 
+#grid.hidden {
+    display: none;
+}
+
 #mini-canvas {
     border: 2px black solid;
     position: absolute;
@@ -152,18 +155,23 @@ html {
     0% {
         background-color: #ff073a;
     }
+
     20% {
         background-color: #ccff00;
     }
+
     40% {
         background-color: #39ff14;
     }
+
     60% {
         background-color: #1b03a3;
     }
+
     80% {
         background-color: #bc13fe;
     }
+
     100% {
         background-color: #ff073a;
     }
@@ -207,9 +215,11 @@ html {
     0% {
         opacity: 1;
     }
+
     50% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -306,7 +316,6 @@ html {
     border-radius: 4px;
     padding: 0.4em;
     margin-bottom: 0.1em;
-    animation-timing-function: linear;
     background: black;
 }
 
@@ -318,9 +327,11 @@ html {
     0% {
         background-position: 0% 82%
     }
+
     50% {
         background-position: 100% 19%
     }
+
     100% {
         background-position: 0% 82%
     }
@@ -329,4 +340,18 @@ html {
 .message-body:hover {
     filter: invert(1);
     border: 2px black solid;
+}
+
+#grid {
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 4px, #00000077 4px, #00000077 5px), repeating-linear-gradient(90deg, transparent, transparent 4px, #00000077 4px, #00000077 5px);
+    background-color: transparent;
+    pointer-events: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-size: 100%;
+}
+
+#toggle-grid {
+    float: right;
 }
