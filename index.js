@@ -244,6 +244,18 @@ var databaseref = database.ref('space').child('main');
 var chatdatabaseref = database.ref('chat');
 var auth = app.auth();
 
+function Space(width, height, name) {
+    var that = this;
+    this.ref = database.ref('space').push();
+    this.id;
+    this.ref.on('value', function (snap) {
+        that.id = snap.key;
+    });
+    this.ref.child('width').set(width);
+    this.ref.child('height').set(height);
+    this.ref.child('name').set(name);
+}
+
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
 
 databaseref.child('data').on('child_added', function (snapshot) {
