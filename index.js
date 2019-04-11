@@ -127,7 +127,7 @@ function Site(space, canvas) {
         var y = Math.floor((e.clientY + document.querySelector('#canvas-container').scrollTop) / 5);
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
-        databaseref.child('data/' + index).set(pixel.color);
+        space.child('data/' + index).set(pixel.color);
         /*that.canvas.classList.add('disss');
         that.timer.show();
         var count = 15;
@@ -258,7 +258,7 @@ function Space(width, height, name) {
 
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
 
-databaseref.child('data').on('child_added', function (snapshot) {
+site.space.child('data').on('child_added', function (snapshot) {
     var value = snapshot.val();
     if (snapshot.key == 'width' || snapshot.key == 'height')
         return;
@@ -283,7 +283,7 @@ databaseref.child('data').on('child_added', function (snapshot) {
         site.elements.pixelCount.text(site.pixelCount + ' pixels filled (' + (site.pixelCount / (site.width * site.height) * 100).toFixed(3) + '% of map)');
 });
 
-databaseref.child('data').on('child_changed', function (snapshot) {
+site.space.child('data').on('child_changed', function (snapshot) {
     var value = snapshot.val();
     if (snapshot.key == 'width' || snapshot.key == 'height')
         return;
