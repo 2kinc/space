@@ -18,8 +18,8 @@ function Site(space, canvas) {
         for (var item in this.data) {
             if (item == null)
                 return;
-            var x = Math.floor(item % that.width) + 1;
-            var y = Math.floor(item / that.width) + 1;
+            var x = Math.floor(item % that.width);
+            var y = Math.floor(item / that.width);
             var pixel = new that.Pixel(x, y, that.data[item], 5);
             pixel.display();
         }
@@ -123,8 +123,8 @@ function Site(space, canvas) {
             that.elements.loading.append(el);
             that.elements.loading.show();
         }
-        var x = Math.floor((e.clientX + document.querySelector('#canvas-container').scrollLeft) / 5) - 1;
-        var y = Math.floor((e.clientY + document.querySelector('#canvas-container').scrollTop) / 5) - 1;
+        var x = Math.floor((e.clientX + document.querySelector('#canvas-container').scrollLeft) / 5);
+        var y = Math.floor((e.clientY + document.querySelector('#canvas-container').scrollTop) / 5);
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
         databaseref.child('data/' + index).set(pixel.color);
@@ -256,14 +256,14 @@ databaseref.child('data').on('child_added', function (snapshot) {
         for (var item in site.data) {
             if (item == null)
                 return;
-            var x = Math.floor(item % site.width) + 1;
-            var y = Math.floor(item / site.width) + 1;
+            var x = Math.floor(item % site.width);
+            var y = Math.floor(item / site.width);
             var pixel = new site.Pixel(x, y, site.data[item], 5);
             pixel.display();
         }
     };
-    var x = Math.floor(index % site.width) + 1;
-    var y = Math.floor(index / site.width) + 1;
+    var x = Math.floor(index % site.width);
+    var y = Math.floor(index / site.width);
     var pixel = new site.Pixel(x, y, value, 5);
     pixel.display();
     site.pixelCount++;
@@ -281,14 +281,14 @@ databaseref.child('data').on('child_changed', function (snapshot) {
         for (var item in site.data) {
             if (item == null)
                 return;
-            var x = Math.floor(item % site.width) + 1;
-            var y = Math.floor(item / site.width) + 1;
+            var x = Math.floor(item % site.width);
+            var y = Math.floor(item / site.width);
             var pixel = new site.Pixel(x, y, site.data[item], 5);
             pixel.display();
         }
     };
-    var x = Math.floor(index % site.width) + 1;
-    var y = Math.floor(index / site.width) + 1;
+    var x = Math.floor(index % site.width);
+    var y = Math.floor(index / site.width);
     var pixel = new site.Pixel(x, y, value, 5);
     pixel.display();
 });
