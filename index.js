@@ -391,3 +391,11 @@ listRef.on("value", function (snap) {
 });
 
 console.log("%c2K inc. %cWant to become a 2K inc developer? Do not worry, CHILD. Fork one of our repositories on Github and we'll hit you up.", 'font-size: 4em; font-family: neue-haas-unica, sans-serif;', 'font-size: 1em; color: green;');
+
+$(document).on('mousemove', function (e) {
+    if (e.clientY < 60) {
+        $('#navbar').removeClass('hidden');
+    } else {
+        $('#navbar').addClass('hidden');
+    }
+});

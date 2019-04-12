@@ -64,6 +64,9 @@ html {
     font-family: neue-haas-unica, sans-serif;
     font-weight: 400;
     font-style: normal;
+    --color-main: black;
+    --color-secondary: white;
+    --color-background: black;
 }
 
 #canvas-container {
@@ -354,4 +357,14 @@ html {
 
 #toggle-grid {
     float: right;
+}
+
+#navbar {
+    z-index: 100000;
+    transition: top 0.3s;
+    display: block;
+}
+
+#navbar.hidden {
+    top: calc(-3em - 10px);
 }
