@@ -32,7 +32,8 @@
     <k-navbar id="navbar" class="hidden">
         <k-navbar-title>2K Space</k-navbar-title>
         <k-navbar-right>
-            <k-button>Info</k-button>
+            <k-button id="info-button">Info</k-button>
+            <k-button id="create-button" class="k-capsule k-rainbow">+ New 2K Space</k-button>
         </k-navbar-right>
     </k-navbar>
     <div id="canvas-container">
@@ -80,6 +81,14 @@
     <div id="pixel-count"></div>
 
     <div id="user-count"></div>
+
+    <div id="create">
+        <h1>New 2K Space</h1>
+        <input type="text" class="k-input" id="create-input-name" placeholder="Name"> <br> <br>
+        <input type="number" max="250" class="k-input" id="create-input-width" value="100"> ×
+        <input type="number" max="250" class="k-input" id="create-input-height" value="100"> <br> <br>
+        <k-button id="create-new-space" class="k-rainbow">Create!</k-button>
+    </div>
 
     <div id="loading"><img src="2K-space-logo.png" alt="2K Space" height="200px"> <br>
         <img src="space-loading-animation.gif" alt="Loading animation" height="60px">

@@ -368,3 +368,24 @@ html {
 #navbar.hidden {
     top: calc(-3em - 10px);
 }
+
+#navbar k-navbar-right {
+    display: block;
+    margin-top: 10px;
+}
+
+#create-button {
+    margin-left: 1em;
+    margin-right: 0.5em;
+}
+
+#create {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--color-background);
+    width: 100vw;
+    height: 100vh;
+    padding: 40px;
+    display: none;
+}

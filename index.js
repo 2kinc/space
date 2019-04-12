@@ -11,7 +11,14 @@ function Site(space, canvas) {
         userCount: $('#user-count'),
         palette: $('#palette'),
         grid: $('#grid'),
-        toggleGrid: $('#toggle-grid')
+        toggleGrid: $('#toggle-grid'),
+        infoButton: $('#info-button'),
+        createScreen: $('#create'),
+        createSpace: $('#create-button'),
+        createInputName: $('#create-input-name'),
+        createInputWidth: $('#create-input-width'),
+        createInputHeight: $('#create-input-height'),
+        createNew: $('#create-new-space')
     };
     this.data = {};
     this.data.render = function () {
@@ -191,6 +198,24 @@ function Site(space, canvas) {
         var y = Math.floor(index / that.width);
         var pixel = new that.Pixel(x, y, value, 5);
         pixel.display();
+    });
+
+    this.elements.createSpace.click(function () {
+        that.elements.createScreen.show();
+    });
+
+    this.elements.createNew.click(function () {
+        var name = that.elements.createInputName.val();
+        if (name == '')
+            name = 'Untitled Space';
+        var params = {
+            name: name,
+            width: that.elements.createInputWidth.val(),
+            height: that.elements.createInputHeight.val()
+        };
+        var space = new Space(params.width, params.height, params.name);
+        that.elements.createScreen.hide();
+        that = new Site(space.ref, document.querySelector('#main-canvas'));
     });
 
     this.pixelCount = 0;
