@@ -18,7 +18,12 @@ function Site(space, canvas) {
         createInputName: $('#create-input-name'),
         createInputWidth: $('#create-input-width'),
         createInputHeight: $('#create-input-height'),
-        createNew: $('#create-new-space')
+        createNew: $('#create-new-space'),
+        createExitButton: $('#create-exit-button'),
+        browseSpaces: $('#browse-spaces'),
+        browseSpacesButton: $('#browse-spaces-button'),
+        browseSpacesContent: $('#browse-spaces-content'),
+        browseSpacesExitButton: $('#browse-spaces-exit-button')
     };
     this.data = {};
     this.data.render = function () {
@@ -49,6 +54,48 @@ function Site(space, canvas) {
         that.elements.grid.css({
             width: that.width * 5 + 'px',
             height: that.height * 5 + 'px'
+        });
+        that.space.child('data').on('child_added', function (snapshot) {
+            var value = snapshot.val();
+            var index = Number(snapshot.key);
+            that.data[index] = value;
+            that.data.render = function () {
+                for (var item in that.data) {
+                    if (item == null)
+                        return;
+                    var x = Math.floor(item % that.width);
+                    var y = Math.floor(item / that.width);
+                    var pixel = new that.Pixel(x, y, that.data[item], 5);
+                    pixel.display();
+                }
+            };
+            var x = Math.floor(index % that.width);
+            var y = Math.floor(index / that.width);
+            var pixel = new that.Pixel(x, y, value, 5);
+            pixel.display();
+            that.pixelCount++;
+            if (that.width != undefined && that.height != undefined)
+                that.elements.pixelCount.text(that.pixelCount + ' pixels filled (' + (that.pixelCount / (that.width * that.height) * 100).toFixed(3) + '% of map)');
+        });
+
+        that.space.child('data').on('child_changed', function (snapshot) {
+            var value = snapshot.val();
+            var index = Number(snapshot.key);
+            that.data[index] = value;
+            that.data.render = function () {
+                for (var item in that.data) {
+                    if (item == null)
+                        return;
+                    var x = Math.floor(item % that.width);
+                    var y = Math.floor(item / that.width);
+                    var pixel = new that.Pixel(x, y, that.data[item], 5);
+                    pixel.display();
+                }
+            };
+            var x = Math.floor(index % that.width);
+            var y = Math.floor(index / that.width);
+            var pixel = new that.Pixel(x, y, value, 5);
+            pixel.display();
         });
     });
     this.Pixel = function (x, y, color, size) {
@@ -153,53 +200,6 @@ function Site(space, canvas) {
         },15000);*/ //timer will be put back later
     };
 
-    this.space.child('data').on('child_added', function (snapshot) {
-        var value = snapshot.val();
-        if (snapshot.key == 'width' || snapshot.key == 'height')
-            return;
-        var index = Number(snapshot.key);
-        that.data[index] = value;
-        that.data.render = function () {
-            for (var item in that.data) {
-                if (item == null)
-                    return;
-                var x = Math.floor(item % that.width);
-                var y = Math.floor(item / that.width);
-                var pixel = new that.Pixel(x, y, that.data[item], 5);
-                pixel.display();
-            }
-        };
-        var x = Math.floor(index % that.width);
-        var y = Math.floor(index / that.width);
-        var pixel = new that.Pixel(x, y, value, 5);
-        pixel.display();
-        that.pixelCount++;
-        if (that.width != undefined && that.height != undefined)
-            that.elements.pixelCount.text(that.pixelCount + ' pixels filled (' + (that.pixelCount / (that.width * that.height) * 100).toFixed(3) + '% of map)');
-    });
-
-    this.space.child('data').on('child_changed', function (snapshot) {
-        var value = snapshot.val();
-        if (snapshot.key == 'width' || snapshot.key == 'height')
-            return;
-        var index = Number(snapshot.key);
-        that.data[index] = value;
-        that.data.render = function () {
-            for (var item in that.data) {
-                if (item == null)
-                    return;
-                var x = Math.floor(item % that.width);
-                var y = Math.floor(item / that.width);
-                var pixel = new that.Pixel(x, y, that.data[item], 5);
-                pixel.display();
-            }
-        };
-        var x = Math.floor(index % that.width);
-        var y = Math.floor(index / that.width);
-        var pixel = new that.Pixel(x, y, value, 5);
-        pixel.display();
-    });
-
     this.elements.createSpace.click(function () {
         that.elements.createScreen.show();
     });
@@ -216,6 +216,18 @@ function Site(space, canvas) {
         var space = new Space(params.width, params.height, params.name);
         that.elements.createScreen.hide();
         that = new Site(space.ref, document.querySelector('#main-canvas'));
+    });
+
+    this.elements.browseSpacesButton.click(function () {
+        that.elements.browseSpaces.show();
+    });
+
+    this.elements.createExitButton.click(function () {
+        that.elements.createScreen.hide();
+    });
+
+    this.elements.browseSpacesExitButton.click(function () {
+        that.elements.browseSpaces.hide();
     });
 
     this.pixelCount = 0;
@@ -331,16 +343,29 @@ function Space(width, height, name) {
     this.ref.child('name').set(name);
 }
 
+database.ref('space').on('child_added', function (snap) {
+    var space = snap.val();
+    var div = document.createElement('div');
+    div.className = 'browse-spaces-item k-button';
+    div.innerText = space.name + ' (' + space.width + '×' + space.height + ')';
+    div.addEventListener('click', function () {
+        site.elements.browseSpaces.hide();
+        site = new Site(snap.ref, document.querySelector('#main-canvas'));
+    });
+    site.elements.browseSpacesContent.prepend(document.createElement('br'));
+    site.elements.browseSpacesContent.prepend(div);
+});
+
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
 
 databaseref.child('data').limitToLast(1).on('value', function () {
     if (site.elements.loading.text() != 'Sign in to 2K inc!')
         site.elements.loading.hide();
-})
+});
 
 chatdatabaseref.on('child_added', (snapshot) => {
     site.displayMessage(snapshot.val());
-})
+});
 
 site.elements.chatInput.keyup(function (e) {
     var key = e.key.toLowerCase();

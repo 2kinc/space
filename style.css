@@ -389,3 +389,23 @@ html {
     padding: 40px;
     display: none;
 }
+
+#browse-spaces {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--color-background);
+    width: 100vw;
+    height: 100vh;
+    padding: 40px;
+    display: none;
+}
+
+.browse-spaces-item {
+    margin: 0.6em;
+    margin-left: 0;
+}
+
+#browse-spaces-exit-button {
+    margin-top: 3em;
+}

@@ -33,6 +33,7 @@
         <k-navbar-title>2K Space</k-navbar-title>
         <k-navbar-right>
             <k-button id="info-button">Info</k-button>
+            <k-button id="browse-spaces-button">Browse Spaces</k-button>
             <k-button id="create-button" class="k-capsule k-rainbow">+ New 2K Space</k-button>
         </k-navbar-right>
     </k-navbar>
@@ -88,6 +89,13 @@
         <input type="number" max="250" class="k-input" id="create-input-width" value="100"> ×
         <input type="number" max="250" class="k-input" id="create-input-height" value="100"> <br> <br>
         <k-button id="create-new-space" class="k-rainbow">Create!</k-button>
+        <k-button id="create-exit-button">Exit</k-button>
+    </div>
+
+    <div id="browse-spaces">
+        <h1>Browse 2K Spaces</h1>
+        <div id="browse-spaces-content"></div>
+        <k-button id="browse-spaces-exit-button">Exit</k-button>
     </div>
 
     <div id="loading"><img src="2K-space-logo.png" alt="2K Space" height="200px"> <br>
