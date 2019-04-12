@@ -409,3 +409,14 @@ html {
 #browse-spaces-exit-button {
     margin-top: 3em;
 }
+
+#show-navbar {
+    position: absolute;
+    top: 1em;
+    left: 50vw;
+    width: 3em;
+    padding: 3em 0;
+    text-align: center;
+    background: rgba(0, 0, 0, .3);
+    color: black;
+}

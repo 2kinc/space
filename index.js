@@ -213,6 +213,10 @@ function Site(space, canvas) {
             width: that.elements.createInputWidth.val(),
             height: that.elements.createInputHeight.val()
         };
+        if (params.width > 250 || params.width < 1 || params.height > 250 || params.height < 1 ) {
+            alert("Width or height values were not in legal range of 1-250");
+            return;
+        }
         var space = new Space(params.width, params.height, params.name);
         that.elements.createScreen.hide();
         that = new Site(space.ref, document.querySelector('#main-canvas'));
@@ -454,6 +458,8 @@ function dragElement(elmnt) {
     }
 
     function dragMouseDown(e) {
+        if (e.target == document.querySelector('#chat-input'))
+            return;
         e = e || window.event;
         e.preventDefault();
         // get the mouse cursor position at startup:
@@ -465,6 +471,8 @@ function dragElement(elmnt) {
     }
 
     function elementDrag(e) {
+        if (e.target == document.querySelector('#chat-input'))
+            return;
         e = e || window.event;
         e.preventDefault();
         // calculate the new cursor position:
