@@ -27,12 +27,13 @@ function Site(space, canvas) {
     this.canvas = canvas;
     this.canvas.ctx = this.canvas.getContext('2d');
     this.timer = $('#timer');
-    space.child('height').once('value').then((snapshot) => {
+    this.space = space;
+    this.space.child('height').once('value').then((snapshot) => {
         var value = snapshot.val();
         that.height = value;
         that.canvas.height = that.height * 5;
     });
-    space.child('width').once('value').then((snapshot) => {
+    this.space.child('width').once('value').then((snapshot) => {
         var value = snapshot.val();
         that.width = value;
         that.canvas.width = that.width * 5;
@@ -110,7 +111,7 @@ function Site(space, canvas) {
         });
     });
 
-    this.canvas.addEventListener('click', function (e) {
+    this.canvas.onclick = function (e) {
         if (that.canvas.classList.contains('disss')) {
             return;
         } else if (auth.currentUser == null) {
@@ -127,7 +128,7 @@ function Site(space, canvas) {
         var y = Math.floor((e.clientY + document.querySelector('#canvas-container').scrollTop) / 5);
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
-        space.child('data/' + index).set(pixel.color);
+        that.space.child('data/' + index).set(pixel.color);
         /*that.canvas.classList.add('disss');
         that.timer.show();
         var count = 15;
@@ -143,8 +144,57 @@ function Site(space, canvas) {
             that.canvas.classList.remove('disss');
             that.timer.hide();
         },15000);*/ //timer will be put back later
+    };
+
+    this.space.child('data').on('child_added', function (snapshot) {
+        var value = snapshot.val();
+        if (snapshot.key == 'width' || snapshot.key == 'height')
+            return;
+        var index = Number(snapshot.key);
+        that.data[index] = value;
+        that.data.render = function () {
+            for (var item in that.data) {
+                if (item == null)
+                    return;
+                var x = Math.floor(item % that.width);
+                var y = Math.floor(item / that.width);
+                var pixel = new that.Pixel(x, y, that.data[item], 5);
+                pixel.display();
+            }
+        };
+        var x = Math.floor(index % that.width);
+        var y = Math.floor(index / that.width);
+        var pixel = new that.Pixel(x, y, value, 5);
+        pixel.display();
+        that.pixelCount++;
+        if (that.width != undefined && that.height != undefined)
+            that.elements.pixelCount.text(that.pixelCount + ' pixels filled (' + (that.pixelCount / (that.width * that.height) * 100).toFixed(3) + '% of map)');
     });
+
+    this.space.child('data').on('child_changed', function (snapshot) {
+        var value = snapshot.val();
+        if (snapshot.key == 'width' || snapshot.key == 'height')
+            return;
+        var index = Number(snapshot.key);
+        that.data[index] = value;
+        that.data.render = function () {
+            for (var item in that.data) {
+                if (item == null)
+                    return;
+                var x = Math.floor(item % that.width);
+                var y = Math.floor(item / that.width);
+                var pixel = new that.Pixel(x, y, that.data[item], 5);
+                pixel.display();
+            }
+        };
+        var x = Math.floor(index % that.width);
+        var y = Math.floor(index / that.width);
+        var pixel = new that.Pixel(x, y, value, 5);
+        pixel.display();
+    });
+
     this.pixelCount = 0;
+
     this.pushMessage = function () {
         if (this.elements.chatInput.val() != '' && auth.currentUser != null) {
             var d = new Date();
@@ -257,53 +307,6 @@ function Space(width, height, name) {
 }
 
 var site = new Site(databaseref, document.querySelector('#main-canvas'));
-
-site.space.child('data').on('child_added', function (snapshot) {
-    var value = snapshot.val();
-    if (snapshot.key == 'width' || snapshot.key == 'height')
-        return;
-    var index = Number(snapshot.key);
-    site.data[index] = value;
-    site.data.render = function () {
-        for (var item in site.data) {
-            if (item == null)
-                return;
-            var x = Math.floor(item % site.width);
-            var y = Math.floor(item / site.width);
-            var pixel = new site.Pixel(x, y, site.data[item], 5);
-            pixel.display();
-        }
-    };
-    var x = Math.floor(index % site.width);
-    var y = Math.floor(index / site.width);
-    var pixel = new site.Pixel(x, y, value, 5);
-    pixel.display();
-    site.pixelCount++;
-    if (site.width != undefined && site.height != undefined)
-        site.elements.pixelCount.text(site.pixelCount + ' pixels filled (' + (site.pixelCount / (site.width * site.height) * 100).toFixed(3) + '% of map)');
-});
-
-site.space.child('data').on('child_changed', function (snapshot) {
-    var value = snapshot.val();
-    if (snapshot.key == 'width' || snapshot.key == 'height')
-        return;
-    var index = Number(snapshot.key);
-    site.data[index] = value;
-    site.data.render = function () {
-        for (var item in site.data) {
-            if (item == null)
-                return;
-            var x = Math.floor(item % site.width);
-            var y = Math.floor(item / site.width);
-            var pixel = new site.Pixel(x, y, site.data[item], 5);
-            pixel.display();
-        }
-    };
-    var x = Math.floor(index % site.width);
-    var y = Math.floor(index / site.width);
-    var pixel = new site.Pixel(x, y, value, 5);
-    pixel.display();
-});
 
 databaseref.child('data').limitToLast(1).on('value', function () {
     if (site.elements.loading.text() != 'Sign in to 2K inc!')
