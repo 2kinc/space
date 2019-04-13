@@ -493,7 +493,7 @@ function dragElement(elmnt) {
 }
 
 $(document).on('mousemove', function (e) {
-    if (e.clientY < 60) {
+    if (e.clientY < 6) {
         $('#navbar').removeClass('hidden');
     } else {
         $('#navbar').addClass('hidden');
