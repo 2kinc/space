@@ -1,3 +1,9 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
 canvas {
     margin: 0;
 }
@@ -78,6 +84,7 @@ html {
     max-width: 100%;
     max-height: calc(100vh - 120px);
     overflow: scroll;
+    cursor: none;
 }
 
 #chat {
@@ -419,4 +426,13 @@ html {
     text-align: center;
     background: rgba(0, 0, 0, .3);
     color: black;
+}
+
+.user-cursor {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 2px white solid;
+    border-radius: 4px;
+    box-shadow: 8px 14px 38px rgba(0, 0, 0, .6), 1px 3px 8px rgba(0, 0, 0, .6);
 }

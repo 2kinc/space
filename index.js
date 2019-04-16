@@ -292,6 +292,15 @@ function Site(space, canvas) {
         this.elements.chatBody.prepend(wrapper);
     };
 
+    this.UserCursor = function (color, x, y) {
+        this.color = color;
+        this.x = x || 0;
+        this.y = y || 0;
+        this.el = document.createElement('div');
+        this.el.className = 'user-cursor';
+        this.el.background = this.color;
+    };
+
     document.onkeypress = function (e) {
         var key = e.key.toLowerCase();
         e.enabled = true;
@@ -432,11 +441,51 @@ var userRef = listRef.push();
 var presenceRef = database.ref(".info/connected");
 presenceRef.on("value", function (snap) {
     if (snap.val()) {
+
+        var cursor = new site.UserCursor('#000000');
+        var cursorRef = database.ref('usercursors').push();
+        var obj = {
+            color: cursor.color,
+            x: cursor.x,
+            y: cursor.y
+        };
+        cursorRef.set(obj);
+
+        $('#canvas-container').mousemove(function (e) {
+            cursor.x = e.clientX + document.querySelector('#canvas-container').scrollLeft;
+            cursor.y = e.clientY + document.querySelector('#canvas-container').scrollTop;
+            cursor.color = site.selectedColor;
+            var newobj = {
+                color: cursor.color,
+                x: cursor.x,
+                y: cursor.y
+            };
+            cursorRef.set(newobj);
+        });
+
         // Remove ourselves when we disconnect.
         userRef.onDisconnect().remove();
+        cursorRef.onDisconnect().remove();
 
         userRef.set(true);
     }
+});
+
+database.ref('usercursors').on('child_added', function (snap) {
+    var cursor = snap.val();
+    var renderedCursor = new site.UserCursor(cursor.color, cursor.x, cursor.y);
+    renderedCursor.el.id = 'user-cursor-' + snap.key;
+    $('#canvas-container').append(renderedCursor.el);
+});
+
+database.ref('usercursors').on('child_changed', function (snap) {
+    var cursor = snap.val();
+    var el = $('#user-cursor-' + snap.key);
+    el.css({
+        background: cursor.color,
+        left: cursor.x + 'px',
+        top: cursor.y + 'px'
+    });
 });
 
 // Number of online users is the number of objects in the presence list.
