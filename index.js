@@ -185,10 +185,10 @@ function Site(space, canvas) {
         that.space.child('data/' + index).set(pixel.color);
         that.canvas.classList.add('disss');
         that.timer.show();
-        var count = 15;
+        var count = 5;
         var interval = setInterval(function () {
             if (count <= 0){
-                that.timer.text(15);
+                that.timer.text(5);
                 clearInterval(interval);
             }
             that.timer.text(count);
