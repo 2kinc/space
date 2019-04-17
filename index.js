@@ -183,7 +183,7 @@ function Site(space, canvas) {
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
         that.space.child('data/' + index).set(pixel.color);
-        /*that.canvas.classList.add('disss');
+        that.canvas.classList.add('disss');
         that.timer.show();
         var count = 15;
         var interval = setInterval(function () {
@@ -197,7 +197,7 @@ function Site(space, canvas) {
         setTimeout(()=>{
             that.canvas.classList.remove('disss');
             that.timer.hide();
-        },15000);*/ //timer will be put back later
+        },5000); //timer will be put back later
     };
 
     this.elements.createSpace.click(function () {
@@ -540,14 +540,18 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
-
+var navbarShown = false;
 $(document).on('mousemove', function (e) {
     if (e.clientY < 6) {
+        navbarShown = true;
         $('#navbar').removeClass('hidden');
     } else {
+        navbarShow = false;
         $('#navbar').addClass('hidden');
     }
 });
-
+$('#navbar').on('mouseover', function (e) {
+    $('#navbar').addClass('hidden');
+});
 console.log("%c2K inc. %cWant to become a 2K inc developer? Do not worry, CHILD. Fork one of our repositories on Github and we'll hit you up.", 'font-size: 4em; font-family: neue-haas-unica, sans-serif;', 'font-size: 1em; color: green;');
 
