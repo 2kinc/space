@@ -436,3 +436,7 @@ html {
     border-radius: 4px;
     box-shadow: 8px 14px 38px rgba(0, 0, 0, .6), 1px 3px 8px rgba(0, 0, 0, .6);
 }
+
+h1 {
+    margin: 0;
+}
