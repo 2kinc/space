@@ -185,19 +185,19 @@ function Site(space, canvas) {
         that.space.child('data/' + index).set(pixel.color);
         that.canvas.classList.add('disss');
         that.timer.show();
-        var count = 5;
+        var seconds = 5;
+        var nextTime = new Date().getTime() + seconds * 1000;
         var interval = setInterval(function () {
-            if (count <= 0){
-                that.timer.text(5);
+            var distance = nextTime - new Date().getTime();
+            if (distance < 0) {
+                that.timer.text('');
+                that.timer.hide();
+                that.canvas.classList.remove('disss');
                 clearInterval(interval);
+            } else {
+                that.timer.text(Math.floor(distance / 1000) + 's ' + String(distance % 1000).padStart(3, '0'));
             }
-            that.timer.text(count);
-            count--;
-        }, 1000);
-        setTimeout(()=>{
-            that.canvas.classList.remove('disss');
-            that.timer.hide();
-        },5000); //timer will be put back later
+        });
     };
 
     this.elements.createSpace.click(function () {
