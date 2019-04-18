@@ -183,8 +183,8 @@ function Site(space, canvas) {
         var index = Math.floor(y * that.width) + x;
         var pixel = new that.Pixel(x, y, that.selectedColor, 5);
         that.space.child('data/' + index).set(pixel.color);
-        that.canvas.classList.add('disss');
-        /*that.timer.show();
+        /*that.canvas.classList.add('disss');
+        that.timer.show();
         var seconds = 5;
         var nextTime = new Date().getTime() + seconds * 1000;
         var interval = setInterval(function () {
