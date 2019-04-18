@@ -24,12 +24,21 @@
         gtag('config', 'UA-133299888-1');
 
     </script>
-    <title>2K Space</title>
+    <style>
+        .user-cursor {
+            display: none;
+        }
+    </style>
+    <title>2K Space - Zen Mode</title>
 </head>
 
 <body>
-    <div id="canvas-container" style="max-height: 100vh; height: 100vh; overflow: hidden;">
-        <canvas id="main-canvas" style="pointer-events: none; position: absolute;"></canvas>
+    <div id="canvas-container" style="height: 100vh; width: 100vw; max-height: 100vh; max-width: 100vw; overflow: hidden;">
+        <div id="canvas-resizer" style="width: 5000px; height: 5000px;">
+            <div id="canvas-mover" style="width: 5000px; height: 5000px;">
+                <canvas id="main-canvas" style="pointer-events: none;"></canvas>
+            </div>
+        </div>
     </div>
 
     <div id="loading"><img src="2K-space-logo.png" alt="2K Space" height="200px"> <br>

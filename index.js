@@ -185,7 +185,7 @@ function Site(space, canvas) {
         that.space.child('data/' + index).set(pixel.color);
         that.canvas.classList.add('disss');
         that.timer.show();
-        var seconds = 5;
+        /*var seconds = 5;
         var nextTime = new Date().getTime() + seconds * 1000;
         var interval = setInterval(function () {
             var distance = nextTime - new Date().getTime();
@@ -197,7 +197,7 @@ function Site(space, canvas) {
             } else {
                 that.timer.text(Math.floor(distance / 1000) + 's ' + String(distance % 1000).padStart(3, '0'));
             }
-        });
+        });*/
     };
 
     this.elements.createSpace.click(function () {
