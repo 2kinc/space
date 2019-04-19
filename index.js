@@ -488,6 +488,10 @@ database.ref('usercursors').on('child_changed', function (snap) {
     });
 });
 
+database.ref('usercursors').on('child_removed', function (snap) {
+    document.querySelector('#main-canvas').removeChild(document.querySelector('#user-cursor-' + snap.key));
+});
+
 // Number of online users is the number of objects in the presence list.
 listRef.on("value", function (snap) {
     site.elements.userCount.text(snap.numChildren() + ' online');
@@ -551,4 +555,3 @@ $(document).on('mousemove', function (e) {
     }
 });
 console.log("%c2K inc. %cWant to become a 2K inc developer? Do not worry, CHILD. Fork one of our repositories on Github and we'll hit you up.", 'font-size: 4em; font-family: neue-haas-unica, sans-serif;', 'font-size: 1em; color: green;');
-
