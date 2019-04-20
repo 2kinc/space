@@ -238,6 +238,10 @@ function Site(space, canvas) {
 
     this.generateBrowseSpacesItem = function (ref) {
         var space = ref.val();
+        if (space.stars == undefined) {
+            ref.ref.child('stars').set(0);
+            space.stars = 0;
+        }
         var wrapper = document.createElement('div');
         wrapper.className = 'browse-spaces-item k-card';
         var nameText = document.createElement('p');
@@ -245,12 +249,25 @@ function Site(space, canvas) {
         var info = document.createElement('p');
         info.className = 'browse-spaces-item--info';
         info.innerText = space.width + '×' + space.height + ', ' + ref.child('data').numChildren() + ' pixels filled';
-        wrapper.addEventListener('click', function () {
+        var starButton = document.createElement('k-button');
+        starButton.className = 'browse-spaces-item--star-button k-capsule k-button k-button--elevated';
+        starButton.innerText = space.stars + ' stars';
+        starButton.addEventListener('click', function () {
+            space.stars++;
+            ref.ref.child('stars').set(space.stars);
+            starButton.innerText = space.stars + ' stars';
+        });
+        var goButton = document.createElement('k-button');
+        goButton.className = 'k-button browse-spaces-item--go-button';
+        goButton.innerText = 'Visit Space';
+        goButton.addEventListener('click', function () {
             that.elements.browseSpaces.hide();
             that = new Site(ref.ref, document.querySelector('#main-canvas'));
         });
         wrapper.appendChild(nameText);
         wrapper.appendChild(info);
+        wrapper.appendChild(starButton);
+        wrapper.appendChild(goButton);
         return wrapper;
     }
 

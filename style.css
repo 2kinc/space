@@ -443,3 +443,8 @@ html {
 h1 {
     margin: 0;
 }
+
+.browse-spaces-item--star-button {
+    background: black;
+    color: #00e676;
+}
