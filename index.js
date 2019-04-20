@@ -252,10 +252,23 @@ function Site(space, canvas) {
         var starButton = document.createElement('k-button');
         starButton.className = 'browse-spaces-item--star-button k-capsule k-button k-button--elevated';
         starButton.innerText = space.stars + ' stars';
+        var d = {};
+        database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).once('value', function (snap) {
+            if (snap.val()) {
+                d.userPressed = true;
+                starButton.classList.add('pressed');
+            }
+        });
         starButton.addEventListener('click', function () {
-            space.stars++;
-            ref.ref.child('stars').set(space.stars);
-            starButton.innerText = space.stars + ' stars';
+            database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).once('value', function (snap) {
+                if (d.userPressed) {
+                    return;
+                }
+                space.stars++;
+                ref.ref.child('stars').set(space.stars);
+                starButton.innerText = space.stars + ' stars';
+                database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).set(true);
+            });
         });
         var goButton = document.createElement('k-button');
         goButton.className = 'k-button browse-spaces-item--go-button';
