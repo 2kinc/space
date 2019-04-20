@@ -406,11 +406,14 @@ html {
     height: 100vh;
     padding: 40px;
     display: none;
+    overflow: auto;
 }
 
 .browse-spaces-item {
     margin: 0.6em;
     margin-left: 0;
+    padding: 16px;
+    cursor: pointer;
 }
 
 #browse-spaces-exit-button {

@@ -213,7 +213,7 @@ function Site(space, canvas) {
             width: that.elements.createInputWidth.val(),
             height: that.elements.createInputHeight.val()
         };
-        if (params.width > 250 || params.width < 1 || params.height > 250 || params.height < 1 ) {
+        if (params.width > 250 || params.width < 1 || params.height > 250 || params.height < 1) {
             alert("Width or height values were not in legal range of 1-250");
             return;
         }
@@ -235,6 +235,24 @@ function Site(space, canvas) {
     });
 
     this.pixelCount = 0;
+
+    this.generateBrowseSpacesItem = function (ref) {
+        var space = ref.val();
+        var wrapper = document.createElement('div');
+        wrapper.className = 'browse-spaces-item k-card';
+        var nameText = document.createElement('p');
+        nameText.innerText = space.name;
+        var info = document.createElement('p');
+        info.className = 'browse-spaces-item--info';
+        info.innerText = space.width + '×' + space.height + ', ' + ref.child('data').numChildren() + ' pixels filled';
+        wrapper.addEventListener('click', function () {
+            that.elements.browseSpaces.hide();
+            that = new Site(ref.ref, document.querySelector('#main-canvas'));
+        });
+        wrapper.appendChild(nameText);
+        wrapper.appendChild(info);
+        return wrapper;
+    }
 
     this.pushMessage = function () {
         if (this.elements.chatInput.val() != '' && auth.currentUser != null) {
@@ -357,15 +375,15 @@ function Space(width, height, name) {
 }
 
 database.ref('space').on('child_added', function (snap) {
-    var space = snap.val();
-    var div = document.createElement('div');
-    div.className = 'browse-spaces-item k-button';
+    var div = site.generateBrowseSpacesItem(snap);
+    /*div.className = 'browse-spaces-item k-button';
     div.innerText = space.name + ' (' + space.width + '×' + space.height + ')';
     div.addEventListener('click', function () {
         site.elements.browseSpaces.hide();
         site = new Site(snap.ref, document.querySelector('#main-canvas'));
     });
     site.elements.browseSpacesContent.prepend(document.createElement('br'));
+    site.elements.browseSpacesContent.prepend(div);*/
     site.elements.browseSpacesContent.prepend(div);
 });
 
@@ -549,7 +567,7 @@ $(document).on('mousemove', function (e) {
     if (e.clientY < 6 && navbarShown == false) {
         navbarShown = true;
         $('#navbar').removeClass('hidden');
-    } else if (e.clientY > 45 && navbarShown == true){
+    } else if (e.clientY > 45 && navbarShown == true) {
         navbarShown = false;
         $('#navbar').addClass('hidden');
     }
