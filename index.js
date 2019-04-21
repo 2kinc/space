@@ -258,8 +258,7 @@ function Site(space, canvas) {
                 d.userPressed = true;
                 starButton.classList.add('pressed');
             }
-        });
-        starButton.addEventListener('click', function () {
+            starButton.addEventListener('click', function () {
             database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).once('value', function (snap) {
                 if (snap.val())
                     return;
@@ -270,6 +269,8 @@ function Site(space, canvas) {
                 database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).set(true);
             });
         });
+        });
+        
         var goButton = document.createElement('k-button');
         goButton.className = 'k-button browse-spaces-item--go-button';
         goButton.innerText = 'Visit Space';
