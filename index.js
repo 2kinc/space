@@ -261,12 +261,12 @@ function Site(space, canvas) {
         });
         starButton.addEventListener('click', function () {
             database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).once('value', function (snap) {
-                if (d.userPressed) {
+                if (snap.val())
                     return;
-                }
                 space.stars++;
                 ref.ref.child('stars').set(space.stars);
                 starButton.innerText = space.stars + ' stars';
+                starButton.classList.add('pressed');
                 database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).set(true);
             });
         });
