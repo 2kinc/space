@@ -204,7 +204,7 @@ function Site(space, canvas) {
         that.elements.createScreen.show();
     });
 
-    this.elements.createNew.click(function () {
+    function createNewSpaceFromForm() {
         var name = that.elements.createInputName.val();
         if (name == '')
             name = 'Untitled Space';
@@ -220,7 +220,9 @@ function Site(space, canvas) {
         var space = new Space(params.width, params.height, params.name);
         that.elements.createScreen.hide();
         that = new Site(space.ref, document.querySelector('#main-canvas'));
-    });
+    }
+
+    this.elements.createNew.click(createNewSpaceFromForm);
 
     this.elements.browseSpacesButton.click(function () {
         that.elements.browseSpaces.show();
@@ -259,18 +261,18 @@ function Site(space, canvas) {
                 starButton.classList.add('pressed');
             }
             starButton.addEventListener('click', function () {
-            database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).once('value', function (snap) {
-                if (snap.val())
-                    return;
-                space.stars++;
-                ref.ref.child('stars').set(space.stars);
-                starButton.innerText = space.stars + ' stars';
-                starButton.classList.add('pressed');
-                database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).set(true);
+                database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).once('value', function (snap) {
+                    if (snap.val())
+                        return;
+                    space.stars++;
+                    ref.ref.child('stars').set(space.stars);
+                    starButton.innerText = space.stars + ' stars';
+                    starButton.classList.add('pressed');
+                    database.ref('users/' + auth.currentUser.uid + '/stars/' + ref.key).set(true);
+                });
             });
         });
-        });
-        
+
         var goButton = document.createElement('k-button');
         goButton.className = 'k-button browse-spaces-item--go-button';
         goButton.innerText = 'Visit Space';
@@ -405,16 +407,8 @@ function Space(width, height, name) {
     this.ref.child('name').set(name);
 }
 
-database.ref('space').on('child_added', function (snap) {
+database.ref('space').orderByChild('stars').on('child_added', function (snap) {
     var div = site.generateBrowseSpacesItem(snap);
-    /*div.className = 'browse-spaces-item k-button';
-    div.innerText = space.name + ' (' + space.width + '×' + space.height + ')';
-    div.addEventListener('click', function () {
-        site.elements.browseSpaces.hide();
-        site = new Site(snap.ref, document.querySelector('#main-canvas'));
-    });
-    site.elements.browseSpacesContent.prepend(document.createElement('br'));
-    site.elements.browseSpacesContent.prepend(div);*/
     site.elements.browseSpacesContent.prepend(div);
 });
 
